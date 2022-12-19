@@ -1,0 +1,29 @@
+
+<div class="panel panel-default"  *ngIf="animal!=null">
+    <div class="panel-footer">
+        <img src="{{ animal.imagePath }} " alt="" class="img-responsive" style="max-height: 300px;">
+    </div>
+
+    <div>
+        <h2 class="panel-heading">{{ animal.name }}
+            <h3  class="panel-title">{{ animal.category }}</h3>
+        </h2>
+     
+        <div class=" panel-body">
+            <div class="col-xs-12">
+                <h3>Description</h3>
+                <p>{{ animal.description }} </p>
+                <button class="btn btn-primary dropdown" dropdownDirective  *ngIf="isAuthenticated">
+                 Manage   <span class="caret"></span>
+                    <ul class="dropdown-menu">
+                        <li><a style="cursor:pointer" (click)="onEditAnimal()">Edit {{ animal.name }} Details</a></li>
+                        <li><a style="cursor:pointer" (click)="onDeleteAnimal()" >Delete {{ animal.name }} </a></li>
+
+                    </ul>
+                </button>
+            </div>
+        </div>
+     
+    </div>
+    
+</div>

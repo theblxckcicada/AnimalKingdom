@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success pull-left" (click)="onAddingNewAnimal()" *ngIf="isAuthenticated">New Animal</button>
+        <div *ngIf="animals.length<=0" class="alert alert-warning" style="margin-top: 20%;position:absolute;">
+            <h3 class="alert-info">There is no animal list to display at the moment</h3>
+        </div>
+        <ul class="btn btn-success dropdown pull-right" dropdownDirective *ngIf="animals.length>0">
+            <a role="button" class="dropdown-toggle" >Categories<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <!-- <li><a >Carnivore</a></li> -->
+                <li *ngFor="let category of animalCategories" (click)="listByCategory(category)"> <a>{{ category }}</a>
+                </li>
+            </ul>
+        </ul>
+    </div>
+    <div class="row" >
+        <div class="col-xs-12">
+            <div *ngIf="animals.length>0">
+                <hr>
+                <h3 align="center">{{ category }}</h3>
+                <hr>
+            </div>
+            <app-animal-item *ngFor="let animalElement of animals" 
+                [animal]="animalElement"></app-animal-item>
+        </div>
+    </div>
+
+</div>

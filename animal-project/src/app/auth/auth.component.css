@@ -1,0 +1,12 @@
+button {
+  margin-top: 5px;
+}
+.account {
+  cursor: pointer;
+  margin-top: 5px;
+  color: black;
+}
+
+.account:hover{
+    color:blue;
+}

@@ -1,0 +1,12 @@
+.active,.list-group-item, .list-group-item-heading{
+    font-weight: bolder;
+   
+    border-width: 5px;
+}
+.active{
+    border-color: lightgray;
+}
+
+.active:hover{
+    color:black;
+}

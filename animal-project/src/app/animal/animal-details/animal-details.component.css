@@ -1,0 +1,13 @@
+img {
+    max-height: 300px;
+    max-width: 400px;
+    margin-left: 25%;
+}
+
+/* .panel-body{
+    height:200px;
+} */
+.panel,.panel-footer{
+    background:linear-gradient(to left top , brown,white,gray,rgb(218, 125, 125));
+    background-size: cover;
+}

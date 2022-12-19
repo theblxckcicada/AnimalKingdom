@@ -1,0 +1,11 @@
+<a routerLink="{{ index }}" class="list-group-item clearfix" (click)="onSelectAnimal()" style="cursor: pointer"
+routerLinkActive="active" *ngIf="animal != null">
+    <div class="pull-left">
+        <h3 class="list-group-item-heading">{{ animal.name}}</h3>
+        <h5 class="list-group-item-heading"><i>Type {{ animal.category }}</i> </h5>
+        <!-- <p class="list-group-item-text">{{ book.description }}</p> -->
+    </div>
+    <span class="pull-right"><img src="{{ animal.imagePath }}" alt="" class="img-responsive"
+            style="max-height:50px;"></span>
+</a>
+<br>

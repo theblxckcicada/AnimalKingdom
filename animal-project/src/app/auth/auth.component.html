@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-5 col-md-offset-2">
+      <app-loading-spinner *ngIf="isLoading && !error"></app-loading-spinner>
+      <div class="alert alert-danger" *ngIf="error">
+        <h3>{{ error }}</h3>
+        <button class="btn btn-primary alert-success" (click)="onBackToLogin()"> Back to Login</button>
+      </div>
+      <form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="!isLoading && !error">
+        <h1 align="center">{{ login ? "Login" : "Sign Up" }}</h1>
+        <div class="form-group">
+          <label for="email" class="form-control-static">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            required
+            email
+            class="form-control"
+            formControlName="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password" class="form-control-static">Password</label>
+          <input
+            type="password"
+            required
+            name="password"
+            id="password"
+            class="form-control"
+            formControlName="password"
+          />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary form-control" type="submit">
+            {{ login ? "Login" : "Sign Up" }}
+          </button>
+          <a
+            class="pull-right account"
+            role="button"
+            (click)="onNoAccount()"
+            *ngIf="login"
+            >Don't have an account</a
+          >
+          <a
+            class="pull-right account"
+            role="button"
+            (click)="onHaveAccount()"
+            *ngIf="!login"
+            >Already have an account</a
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+    <form (ngSubmit)="onAddingAnimal()" #form="ngForm">
+        <h2 align="center" style="color:white">Enter Details Of A New Animal</h2>
+        <div class="row">
+            <div class="form-group  col-sm-6">
+                <label for="name" id="name">Name</label>
+                <input type="text" name="name" #name="ngModel" ngModel >
+                <span class="help-block" *ngIf="!name.valid && name.touched">
+                    <span *ngIf="name.errors['required']">Please enter a valid name</span>
+                    <span *ngIf="!name.errors['validatedName'] && !name.errors['required']"> An animal with that name already exists </span>
+                </span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="category" id="category">Category</label>
+                <select #category="ngModel" ngModel name="category"  required >
+                    <option value="Carnivore">Carnivore</option>
+                    <option value="Herbivore">Herbivore</option>
+                    <option value="Omnivore">Omnivore</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group  col-sm-6">
+                <label for="description" id="description">Description</label>
+                <textarea name="description" id="description" required ngModel #description="ngModel" ></textarea>
+                <span class="help-block" *ngIf="!description.valid && description.touched">
+                    Please enter a description for the animal</span>
+                <button class="btn btn-primary" type="button" >
+                   {{ editable? 'Edit': 'Add' }} Animal
+                </button>
+            </div>
+            <div class="form-group  col-sm-6">
+                <label for="imagePath" id="imagePath">ImagePath</label>
+                <textarea name="imagePath" id="imagePath" ngModel #imagePath="ngModel" required ></textarea>
+                <img src="{{ imageSrc }}" alt="{{ imageSrc }} image">
+                <span class="help-block" *ngIf="!imagePath.valid && imagePath.touched">
+                    Please enter an image path</span>
+               
+            </div>
+        </div>
+    </form>
+</div>
+

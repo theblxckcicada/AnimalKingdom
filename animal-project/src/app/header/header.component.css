@@ -1,0 +1,37 @@
+.search-nav{
+    padding:12px;
+    position:absolute;
+    margin-left:65%;
+}
+button 
+{
+    width: 40px;
+    height:35px;
+    margin-left:-40px;
+    cursor:unset;
+    
+}
+input[type=text]{
+    height: 35px;
+    width:200px;
+}
+
+nav{
+    background:linear-gradient(to bottom right, brown,rgb(59, 23, 23),lightgray);
+}
+
+.data{
+    cursor:pointer;
+}
+
+.data:hover{
+    background-color:gray;
+    color:black;
+}
+
+#change{
+    color:white;
+}
+#change:hover{
+    background-color: gray;
+}
