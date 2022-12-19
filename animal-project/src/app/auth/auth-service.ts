@@ -135,9 +135,10 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    
     this.loggedIn = false;
     this.user = null;
-    this.authenticatedUser.next(this.user);
+    // this.authenticatedUser.next(this.user);
+    localStorage.removeItem('user');
   }
 }
