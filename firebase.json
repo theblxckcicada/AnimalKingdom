@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist\\animal-project",
+    "public": "dist/animal-project",
     "ignore": [
       "firebase.json",
       "**/.*",
