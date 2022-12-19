@@ -4,7 +4,14 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Subject, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Subject,
+  tap,
+  throwError,
+} from 'rxjs';
 import { User } from './user.model';
 
 export interface ResponseData {
@@ -87,7 +94,7 @@ export class AuthService {
         errorMessage = 'User with that email does not exists';
         break;
     }
- 
+
     return throwError(errorMessage);
   }
   private handleAuthentication(
@@ -128,6 +135,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.removeItem('user');
     this.loggedIn = false;
     this.user = null;
     this.authenticatedUser.next(this.user);
