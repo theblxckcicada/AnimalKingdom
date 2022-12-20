@@ -21,6 +21,7 @@ import { AuthService } from './auth/auth-service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimalGuardService } from './shared/animal-guard.service';
 import { LoadingSpinner } from './shared/loading-spinner.component';
+import { SearchPipe } from './shared/search.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoadingSpinner } from './shared/loading-spinner.component';
     DropdownDirective,
     AnimalEditComponent,
     AuthComponent,
-    LoadingSpinner
+    LoadingSpinner,
+    SearchPipe
   
   ],
   imports: [
@@ -43,7 +45,7 @@ import { LoadingSpinner } from './shared/loading-spinner.component';
     AppModuleRouting,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [AnimalService,
     AnimalGuardService,  DropdownDirective, 

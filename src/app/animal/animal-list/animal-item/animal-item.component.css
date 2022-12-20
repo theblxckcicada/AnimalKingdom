@@ -10,3 +10,6 @@
 .active:hover{
     color:black;
 }
+.animal-img:hover{
+    scale: 2;
+}

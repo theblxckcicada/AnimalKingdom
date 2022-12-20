@@ -8,23 +8,32 @@ import { AnimalService } from '../animal.service';
 @Component({
   selector: 'app-animal-list',
   templateUrl: './animal-list.component.html',
-  styleUrls: ['./animal-list.component.css']
+  styleUrls: ['./animal-list.component.css'],
 })
 export class AnimalListComponent implements OnInit {
   animals: Animal[] = [];
+  @Input() animal: Animal;
   tempAnimals: Animal[] = [];
   animalCategories: string[];
-  isAuthenticated:boolean = false;
-  @Input() category: string = "All";
+  isAuthenticated: boolean = false;
+  animalFilter = '';
+  @Input() category: string = 'All';
 
-  constructor(private animalService: AnimalService, private router: Router,
+  constructor(
+    private animalService: AnimalService,
+    private router: Router,
     private dataStorageService: DataStorageService,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.animalService.animalFilterWord.subscribe((word) => {
+      this.animalFilter = word;
+      this.router.navigate(['/animal']);
+    });
     this.dataStorageService.fetchAnimalsData();
-    this.animals = this.animalService.getAllAnimals();
-    this.tempAnimals = this.animalService.getAllAnimals();
+    // this.animals = this.animalService.getAllAnimals();
+    // this.tempAnimals = this.animalService.getAllAnimals();
 
     this.isAuthenticated = this.authService.loggedIn;
 
@@ -33,18 +42,17 @@ export class AnimalListComponent implements OnInit {
         this.animals = animals;
         this.tempAnimals = animals;
         this.animalCategories = this.animalService.getAllCategories();
+        this.animal = this.animals[0];
+        this.router.navigate(['/animal/' + this.animal.name]);
       }
-
-    })
-
-
+    });
   }
 
   listByCategory(category: string) {
     const animalsByCat: Animal[] = [];
     this.animals = this.tempAnimals.slice();
 
-    if (category === "All") {
+    if (category === 'All') {
       this.animals = this.tempAnimals.slice();
       this.category = category;
     } else {
@@ -56,7 +64,8 @@ export class AnimalListComponent implements OnInit {
       this.animals = animalsByCat;
       this.category = category + 's';
     }
-
+    this.animal = this.animals[0];
+    this.router.navigate(['/animal/' + this.animal.name]);
   }
   onAddingNewAnimal() {
     this.router.navigate(['/add']);

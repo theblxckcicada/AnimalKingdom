@@ -25,6 +25,7 @@ export class DataStorageService {
         this.http.get<Animal[]>('https://ng-animal-project-default-rtdb.firebaseio.com/animals.json'
         ).subscribe( animals => {
             console.log(animals);
+            animals.sort(() => (Math.random() > .5 ? 1 : -1));
             this.animalService.setAnimals(animals);
         })
     }

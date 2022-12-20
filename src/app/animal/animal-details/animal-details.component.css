@@ -1,13 +1,40 @@
 img {
-    max-height: 300px;
-    max-width: 400px;
-    margin-left: 25%;
+  max-height: 300px;
+  max-width: 400px;
+  margin-left: 25%;
 }
 
 /* .panel-body{
     height:200px;
 } */
-.panel,.panel-footer{
-    background:linear-gradient(to left top , brown,white,gray,rgb(218, 125, 125));
-    background-size: cover;
+.panel,
+.panel-footer {
+  background: linear-gradient(
+    to left top,
+    brown,
+    white,
+    gray,
+    rgb(218, 125, 125)
+  );
+  background-size: cover;
+}
+.animal-img {
+  max-height: 300px;
+}
+
+.animal-img:hover {
+  scale: 1.5;
+  cursor: pointer;
+}
+
+.panel-animation {
+  transition: width 2s, height 2s, transform 2s;
+}
+@keyframes animate-panel {
+  0% {
+    translatex: -100px;
+  }
+  50% {
+    translatex: -50px;
+  }
 }
