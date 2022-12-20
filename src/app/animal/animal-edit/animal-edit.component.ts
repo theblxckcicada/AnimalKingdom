@@ -50,9 +50,12 @@ export class AnimalEditComponent implements OnInit, OnDestroy {
       });
     });
   }
+  onCancel() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 
   onEditingAnimal() {
-    console.log('starting editing')
+    console.log('starting editing');
     this.animalService.updateAnimal(
       new Animal(
         this.form.value.name,
