@@ -1,14 +1,12 @@
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   catchError,
-  map,
-  Subject,
   tap,
   throwError,
 } from 'rxjs';
@@ -28,7 +26,9 @@ export class AuthService {
   user: User;
   loggedIn: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  tokenExpiryDuration: any;
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   isAuthenticated() {
     const promise = new Promise((resolve, reject) => {
@@ -107,6 +107,7 @@ export class AuthService {
     const user = new User(email, localId, idToken, expiryDate);
     this.authenticatedUser.next(user);
     this.loggedIn = true;
+    this.autoLogout(expiresIn * 1000);
     localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -134,11 +135,17 @@ export class AuthService {
     }
   }
 
+  autoLogout(expiryDuration: number) {
+    this.tokenExpiryDuration = setTimeout(() => {
+      this.logout();
+    }, expiryDuration);
+  }
+
   logout() {
-    
     this.loggedIn = false;
     this.user = null;
-    // this.authenticatedUser.next(this.user);
+    this.authenticatedUser.next(this.user);
     localStorage.removeItem('user');
+    this.router.navigate(['/animal']);
   }
 }
