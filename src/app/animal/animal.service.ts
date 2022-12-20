@@ -1,6 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DataStorageService } from '../data-storage/data-storage.service';
 import { Animal } from './animal.model';
 
 @Injectable({ providedIn: 'root' })
@@ -44,7 +43,7 @@ export class AnimalService {
   categories: string[] = ['All'];
   id: number;
   isValid: boolean = false;
-  animalIsEditable = new Subject<boolean>();
+  sendAnimalId = new Subject<string>();
   editableAnimal = new Subject<Animal>();
   editAnimal = new Subject<Animal>();
   animalFilterWord = new Subject<string>();
@@ -122,5 +121,17 @@ export class AnimalService {
       }
     }
     this.animalsEmitter.next(this.animals);
+  }
+  updateAnimal(animal: Animal) {
+    for (const an of this.animals) {
+      console.log('animal '+ an.name);
+      console.log(an);
+      if (an.name.toUpperCase() === animal.name.toUpperCase()) {
+        an.category = animal.category;
+        an.description = animal.description;
+        an.imagePath = animal.imagePath;
+        console.log(an);
+      }
+    }
   }
 }

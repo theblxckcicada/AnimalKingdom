@@ -36,9 +36,13 @@ export class AnimalAddComponent {
       ]),
       category: new FormControl('Carnivore'),
       description: new FormControl(null, Validators.required),
-      imagePath: new FormControl(null, Validators.required),
+      imagePath: new FormControl(
+        null,
+        Validators.required,
+        this.imageValidator.bind(this)
+      ),
     });
-    this.imageValidator();
+    // this.imageValidator();
   }
   onAddingAnimal() {
     const animal = new Animal(
@@ -55,10 +59,16 @@ export class AnimalAddComponent {
     this.form.reset();
   }
 
-  imageValidator(){
-    setTimeout(()=>{
+  imageValidator(): Promise<any> {
+    const promise = new Promise((resolve, reject) =>
+      setTimeout(() => {
         this.imageSrc = this.form.get('imagePath').value;
-    },1000);
+        if (this.imageSrc.length > 0) {
+          return true;
+        }
+      }, 1000)
+    );
+    return promise;
   }
 
   nameValidator(control: FormControl): { [s: string]: boolean } {

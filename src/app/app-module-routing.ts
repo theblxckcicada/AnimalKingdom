@@ -23,7 +23,7 @@ const appRoutes: Routes = [
         ]
 
     },
-    { path: 'add', component: AnimalAddComponent, canActivate: [AnimalGuardService] },
+    { path: 'add', component: AnimalAddComponent, canActivate: [AuthGuardService] },
     {path: 'auth', component: AuthComponent},
     {path: '**', redirectTo:'/animal'}
 
