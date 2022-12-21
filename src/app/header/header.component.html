@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default clearfix">
   <div class="container-fluid">
     <div class="navbar-header">
       <a
@@ -23,16 +23,16 @@
         </li>
       </ul>
 
-      <div class="nav navbar-nav search-nav">
+      <div class="nav navbar-nav search-nav clearfix">
         <form (ngSubmit)="onAnimalSearch()" [formGroup]="form">
           <input
             type="text"
             placeholder="search animal by name"
             formControlName="text"
           />
-          <button type="submit" (click)="onAnimalSearch()">
-            <i class="fa fa-search"></i>
-          </button>
+          <!-- <button type="submit" (click)="onAnimalSearch()"> -->
+            <!-- <i class="fa fa-search"></i> -->
+          <!-- </button> -->
         </form>
       </div>
 
@@ -46,7 +46,7 @@
             >Logout</a
           >
         </li>
-        <li class="dropdown" dropdownDirective *ngIf="isAuthenticated">
+        <li class="dropdown clearfix" dropdownDirective *ngIf="isAuthenticated">
           <a role="button" id="change">Manage <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a class="data" (click)="saveData()">Save Data</a></li>

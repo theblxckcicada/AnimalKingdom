@@ -41,6 +41,7 @@ export class AnimalDetailsComponent implements OnInit, OnDestroy {
   animal: Animal = null;
   id: string;
   isAuthenticated: boolean = false;
+  canDelete:boolean = false;
   routeSub: Subscription;
 
   constructor(
@@ -55,7 +56,9 @@ export class AnimalDetailsComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       this.animal = this.animalService.getAnimalById(this.id);
       this.isAuthenticated = this.authService.loggedIn;
+      this.canDelete = this.authService.canDelete;
     });
+    
   }
   onEditAnimal() {
     this.router.navigate(['edit'], {

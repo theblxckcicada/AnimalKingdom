@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
       setTimeout(() => {
         this.animalFilter = this.form.get('text').value;
         this.onAnimalSearch();
-      }, 500)
+      }, 200)
     );
   }
   onAnimalSearch() {
@@ -66,6 +66,6 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchData() {
-    this.dataStorageService.fetchAnimalsData();
+    this.dataStorageService.fetchAnimalsData().subscribe();
   }
 }

@@ -58,9 +58,6 @@ export class AnimalService {
         }
       }
     }
-    console.log('animal added');
-    console.log(animal);
-    // this.dataStorageService.saveAnimalsData();
     this.animalsEmitter.next(this.animals);
   }
   setAnimals(animals: Animal[]) {
@@ -124,13 +121,10 @@ export class AnimalService {
   }
   updateAnimal(animal: Animal) {
     for (const an of this.animals) {
-      console.log('animal '+ an.name);
-      console.log(an);
       if (an.name.toUpperCase() === animal.name.toUpperCase()) {
         an.category = animal.category;
         an.description = animal.description;
         an.imagePath = animal.imagePath;
-        console.log(an);
       }
     }
   }

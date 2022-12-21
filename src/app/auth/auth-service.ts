@@ -1,15 +1,7 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  catchError,
-  tap,
-  throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 
 export interface ResponseData {
@@ -25,6 +17,7 @@ export class AuthService {
   authenticatedUser = new BehaviorSubject<User>(null);
   user: User;
   loggedIn: boolean = false;
+  canDelete: boolean = false;
 
   tokenExpiryDuration: any;
 
@@ -36,7 +29,6 @@ export class AuthService {
         resolve(this.loggedIn);
       }, 800);
     });
-    console.log(promise);
     return promise;
   }
   login(email: string, password: string) {
@@ -52,6 +44,9 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap((responseData: ResponseData) => {
+          if (responseData.email === 'dimakatso@projects.net') {
+            this.canDelete = true;
+          }
           this.handleAuthentication(
             responseData.email,
             responseData.localId,
@@ -73,13 +68,19 @@ export class AuthService {
       )
       .pipe(
         catchError(this.handleError),
-        tap((responseData: ResponseData) => {})
+        tap((responseData: ResponseData) => {
+          this.handleAuthentication(
+            responseData.email,
+            responseData.localId,
+            responseData.idToken,
+            +responseData.expiresIn
+          );
+        })
       );
   }
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'Unknown error occured!!';
-    console.log('Error occured in the handle error');
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(errorMessage);
     }
@@ -143,6 +144,7 @@ export class AuthService {
 
   logout() {
     this.loggedIn = false;
+    this.canDelete = false;
     this.user = null;
     this.authenticatedUser.next(this.user);
     localStorage.removeItem('user');

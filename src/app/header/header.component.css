@@ -1,7 +1,16 @@
 .search-nav{
     padding:12px;
-    position:absolute;
-    margin-left:65%;
+    position:relative;
+   margin-left: 20%;
+   
+  
+
+}
+.search-nav form input{
+    border-radius: 15px;
+    width:270px;
+    border-style: none;
+    text-align: center;
 }
 button 
 {

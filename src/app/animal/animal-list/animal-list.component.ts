@@ -31,7 +31,7 @@ export class AnimalListComponent implements OnInit {
       this.animalFilter = word;
       this.router.navigate(['/animal']);
     });
-    this.dataStorageService.fetchAnimalsData();
+    this.dataStorageService.fetchAnimalsData().subscribe();
     // this.animals = this.animalService.getAllAnimals();
     // this.tempAnimals = this.animalService.getAllAnimals();
 
