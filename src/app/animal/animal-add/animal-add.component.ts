@@ -1,6 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DataStorageService } from 'src/app/data-storage/data-storage.service';
 import { Animal } from '../animal.model';
 import { AnimalService } from '../animal.service';
@@ -11,11 +10,7 @@ import { AnimalService } from '../animal.service';
   styleUrls: ['./animal-add.component.css'],
 })
 export class AnimalAddComponent {
-  imageSrc: string;
-  name: string;
-  description: string;
-  imagePath: string;
-  category: string;
+
   editable: boolean;
   animalNames = [];
   editableAnimal: Animal;
@@ -23,8 +18,6 @@ export class AnimalAddComponent {
 
   constructor(
     private animalService: AnimalService,
-    private router: Router,
-    private route: ActivatedRoute,
     private dataStorageService: DataStorageService
   ) {}
   ngOnInit() {
@@ -38,11 +31,10 @@ export class AnimalAddComponent {
       description: new FormControl(null, Validators.required),
       imagePath: new FormControl(
         null,
-        Validators.required,
-        this.imageValidator.bind(this)
+        Validators.required
       ),
     });
-    // this.imageValidator();
+
   }
   onAddingAnimal() {
     const animal = new Animal(
@@ -51,25 +43,12 @@ export class AnimalAddComponent {
       this.form.get('description').value,
       this.form.get('imagePath').value
     );
-    console.log(animal);
     this.animalService.addAnimal(animal);
     this.dataStorageService.saveAnimalsData();
-    console.log(this.form);
 
     this.form.reset();
   }
 
-  imageValidator(): Promise<any> {
-    const promise = new Promise((resolve, reject) =>
-      setTimeout(() => {
-        this.imageSrc = this.form.get('imagePath').value;
-        if (this.imageSrc.length > 0) {
-          return true;
-        }
-      }, 1000)
-    );
-    return promise;
-  }
 
   nameValidator(control: FormControl): { [s: string]: boolean } {
     for (let name of this.animalNames) {

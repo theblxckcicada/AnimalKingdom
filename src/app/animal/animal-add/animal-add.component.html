@@ -31,7 +31,7 @@
             <div class="form-group  col-sm-6">
                 <label for="imagePath" id="imagePath">ImagePath</label>
                 <textarea name="imagePath" id="imagePath" formControlName="imagePath" required ></textarea>
-                <img *ngIf="imageSrc.length>0" src="{{ imageSrc }}" alt="animal image" style="max-height:300px; max-width:320px;">
+                <img *ngIf="form.get('imagePath').value.length > 0" src="{{  form.get('imagePath').value  }}" alt="animal image" style="max-height:300px; max-width:320px;">
                 <span class="help-block" *ngIf="!form.get('imagePath').valid && form.get('imagePath').touched">
                     Please enter an image path</span>
                

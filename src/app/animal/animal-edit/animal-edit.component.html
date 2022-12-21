@@ -68,8 +68,8 @@
           required
         ></textarea>
         <img *ngIf="imageSrc.length>0"
-          src="{{ imageSrc }}"
-          alt="{{ imageSrc }} image"
+          src="{{ form.get('imagePath').value }}"
+          alt="animal image"
           style="max-width: 300px; max-height: 300px"
         />
         <span

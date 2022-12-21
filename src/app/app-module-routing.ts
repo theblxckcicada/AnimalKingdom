@@ -24,7 +24,7 @@ const appRoutes: Routes = [
       {
         path: ':id',
         component: AnimalDetailsComponent,
-        resolve: [AnimalsResover],
+        // resolve: [AnimalsResover],
       },
       {
         path: ':id/edit',
