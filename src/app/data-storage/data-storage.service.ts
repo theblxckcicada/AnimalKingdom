@@ -20,12 +20,7 @@ export class DataStorageService {
 
   fetchAnimalsData() {
     return this.http
-      .get<Animal[]>('https://localhost:7027/api/Animals', {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        },
-      })
+      .get<Animal[]>('https://ng-animal-project-default-rtdb.firebaseio.com/animals.json',)
       .pipe(
         tap((animals) => {
           //   animals.sort(() => (Math.random() > 0.5 ? 1 : -1));
