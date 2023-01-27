@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -13,16 +13,14 @@ import { AnimalService } from './animal/animal.service';
 import { FirstPageComponent } from './first-page/first-page.component';
 import { AppModuleRouting } from './app-module-routing';
 import { DropdownDirective } from './animal/dropdown.directive';
-import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnimalEditComponent } from './animal/animal-edit/animal-edit.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { AuthService } from './auth/auth-service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimalGuardService } from './shared/animal-guard.service';
 import { LoadingSpinner } from './shared/loading-spinner.component';
 import { SearchPipe } from './shared/search.pipe';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
