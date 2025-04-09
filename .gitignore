@@ -1,18 +1,16 @@
 ﻿.vs/
 .vs/
-ⸯ獶䄯楮慭䭬湩摧浯਍਍ⸯ獶䄯楮慭䭬湩摧浯਍
-
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
+angular/dist
+angular/tmp
+angular/out-tsc
 /bazel-out
 
 # Node
-/node_modules
-npm-debug.log
+angular/node_modules
+angular/npm-debug.log
 yarn-error.log
 
 # IDEs and editors
