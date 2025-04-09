@@ -63,7 +63,6 @@ namespace mobileapp.Data
                 animalToUpdate.Description = animal.Description;
                 animalToUpdate.Category = animal.Category;
                 animalToUpdate.Image = animal.Image;
-                animals.Add(animalToUpdate);
             }
         }
 
