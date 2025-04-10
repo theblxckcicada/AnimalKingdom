@@ -1,17 +1,12 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using mobileapp.Data;
 using mobileapp.Models;
 using mobileapp.Views.Pages;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace mobileapp.Views.ViewModel;
 
-public partial class AnimalViewModel : ContentView
+public partial class AnimalViewModel : BaseViewModel
 {
 
     public ObservableCollection<Animal> AnimalCollection { get; } = [];

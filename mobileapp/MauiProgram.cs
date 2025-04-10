@@ -20,8 +20,9 @@ public static class MauiProgram
 		// Add Dependency injection 
         builder.Services.AddSingleton(FilePicker.Default);
 
-		// Add View Model as SingleTon
+		// Add View Models
 		builder.Services.AddSingleton<AnimalViewModel>();
+		builder.Services.AddTransient<AnimalItemViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();
