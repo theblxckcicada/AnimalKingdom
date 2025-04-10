@@ -42,3 +42,5 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+/mobileapp/bin/Debug/net9.0-android/com.companyname.mobileapp-Signed.apk
