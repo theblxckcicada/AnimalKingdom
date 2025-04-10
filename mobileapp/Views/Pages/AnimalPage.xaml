@@ -3,21 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mobileapp.Views.Pages.AnimalPage"
              xmlns:model="clr-namespace:mobileapp.Models"
+             xmlns:viewmodel="clr-namespace:mobileapp.Views.ViewModel"
+             x:DataType="viewmodel:AnimalViewModel"
+             
     Shell.NavBarIsVisible="False"
              Title="Animal Kingdom">
 
     <Grid RowDefinitions="50,*,80" ColumnDefinitions="*"  BackgroundColor="SandyBrown">
-
-        <HorizontalStackLayout Grid.Row="0"   VerticalOptions="Center"  HeightRequest="50"  Margin="0,0,20,10"
+        <HorizontalStackLayout 
+            Grid.Row="0"   
+            VerticalOptions="Center"  
+            HeightRequest="50"  
+            Margin="0,0,20,10"
                            >
             <SearchBar  BackgroundColor="White" 
-                      
-                        x:Name="AnimalSearchBar" 
-                       
+                        Placeholder="E.g Leopard"
+                        x:Name="AnimalSearchBar"
+                        TextChanged="AnimalSearchBar_TextChanged"
                         TextColor="DarkBlue" 
-                        TextChanged="SearchBar_TextChanged"/>
+                     />
         </HorizontalStackLayout>
-        <CollectionView Margin="0,20,0,0" x:Name="AnimalListCollection" SelectionChanged="AnimalListCollection_SelectionChanged" Grid.Row="1" SelectionMode="Single">
+        <CollectionView Margin="0,20,0,0" 
+                        ItemsSource="{Binding AnimalCollection}" 
+                        SelectionChangedCommand="{Binding AnimalSelectionChangedCommand}" 
+                         SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
+                        Grid.Row="1" SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Animal">
                     <Border HeightRequest="90" Margin="15,5,15,5" BackgroundColor="NavajoWhite">
@@ -26,8 +36,8 @@
                         </Border.StrokeShape>
                         <Grid RowDefinitions="*" ColumnDefinitions="*,120">
                             <VerticalStackLayout Padding="20" Grid.Column="0">
-                                <Label x:Name="AnimalCategory" Text="{Binding Category}" FontSize="14"/>
-                                <Label x:Name="AnimalName" Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
+                                <Label  Text="{Binding Category}" FontSize="14"/>
+                                <Label Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
                             </VerticalStackLayout>
                             <Border Grid.Column="1" HeightRequest="100">
                                 <Border.StrokeShape>
@@ -42,9 +52,9 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button x:Name="BtnAddAnimal" Text="Add" WidthRequest="250" Grid.Row="2" HeightRequest="50" 
+        <Button Text="Add" WidthRequest="250" Grid.Row="2" HeightRequest="50" 
                         TextColor="SandyBrown" FontAttributes="Bold" 
-                        BackgroundColor="DarkBlue" Clicked="BtnAddAnimal_ClickedAsync"/>
+                        BackgroundColor="DarkBlue" Command="{Binding NavigateToAddAnimalPageCommand}"/>
 
     </Grid>
 

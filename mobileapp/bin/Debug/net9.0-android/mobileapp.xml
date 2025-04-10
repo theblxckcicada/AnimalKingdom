@@ -4,6 +4,29 @@
         <name>mobileapp</name>
     </assembly>
     <members>
+        <member name="T:mobileapp.Views.ViewModel.AnimalViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="F:mobileapp.Views.ViewModel.AnimalViewModel.animalSelectionChangedCommand">
+            <summary>The backing field for <see cref="P:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSelectionChangedCommand"/>.</summary>
+        </member>
+        <member name="P:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSelectionChangedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSelectionChangedAsync(mobileapp.Models.Animal)"/>.</summary>
+        </member>
+        <member name="F:mobileapp.Views.ViewModel.AnimalViewModel.navigateToAddAnimalPageCommand">
+            <summary>The backing field for <see cref="P:mobileapp.Views.ViewModel.AnimalViewModel.NavigateToAddAnimalPageCommand"/>.</summary>
+        </member>
+        <member name="P:mobileapp.Views.ViewModel.AnimalViewModel.NavigateToAddAnimalPageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:mobileapp.Views.ViewModel.AnimalViewModel.NavigateToAddAnimalPageAsync"/>.</summary>
+        </member>
+        <member name="F:mobileapp.Views.ViewModel.AnimalViewModel.animalSearchTextChangedCommand">
+            <summary>The backing field for <see cref="P:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSearchTextChangedCommand"/>.</summary>
+        </member>
+        <member name="P:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSearchTextChangedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:mobileapp.Views.ViewModel.AnimalViewModel.AnimalSearchTextChanged(System.String)"/>.</summary>
+        </member>
         <member name="T:mobileapp.Resource">
             <summary>
             Android Resource Designer class.
