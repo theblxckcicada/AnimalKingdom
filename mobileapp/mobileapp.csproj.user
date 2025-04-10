@@ -15,9 +15,6 @@
     <MauiXaml Update="Views\Controls\AnimalControl.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Views\Controls\AnimalItemControl.xaml">
-      <SubType>Designer</SubType>
-    </MauiXaml>
     <MauiXaml Update="Views\Pages\AddAnimalPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

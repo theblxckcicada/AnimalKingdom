@@ -2,13 +2,70 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mobileapp.Views.Pages.AnimalItemPage"
-                      xmlns:controls="clr-namespace:mobileapp.Views.Controls"
+              xmlns:controls="clr-namespace:mobileapp.Views.Controls"
+             xmlns:viewmodel="clr-namespace:mobileapp.Views.ViewModel"
+             x:DataType="viewmodel:AnimalItemViewModel"            
              Shell.NavBarIsVisible="False"
-             x:Name="Page">
-    <controls:AnimalItemControl x:Name="AnimalItemCtrl"
-                            OnUpdate="AnimalItemCtrl_OnUpdate"
-                             OnCancel="AnimalItemCtrl_OnCancel"
-                        />
+             Title="{Binding Title}">
+    <Grid RowDefinitions="200,50,200,80" ColumnDefinitions="*">
+        <Grid >
+            <Border
+               StrokeShape="RoundRectangle 200"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Margin="-200,50,50,10"
+               WidthRequest="400"
+               HeightRequest="400"
+               Background="SandyBrown">
 
+            </Border>
+            <Border
+                  StrokeShape="RoundRectangle 250"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  Margin="-200,50,50,10"
+                  WidthRequest="400"
+                  HeightRequest="400"
+            >
+                <Image Source="{Binding Animal.Image}"
+                     Aspect="AspectFill" 
+                     WidthRequest="400" 
+                     HeightRequest="400"/>
+            </Border>
+        </Grid>
+
+        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20" Grid.Row="1" Margin="0,200,0,0" HeightRequest="50">
+            <Label Text="{Binding Animal.Name}" HorizontalOptions="Center" FontSize="28" TextColor="SandyBrown" FontAttributes="Bold">
+            </Label>
+            <Label Text="{Binding Animal.Category}" HorizontalOptions="Center" TextColor="Gray">
+            </Label>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Padding="15" Grid.Row="2" Margin="20,270,20,0" HeightRequest="200">
+            <Label Text="{Binding Animal.Description}" LineBreakMode="CharacterWrap" WidthRequest="350" HeightRequest="200">
+            </Label>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="3"  HeightRequest="80" Margin="0,100,0,0" >
+            <Button WidthRequest="150" 
+                  HeightRequest="35" 
+                  Margin="20,20,20,0" 
+                  BackgroundColor="DarkBlue" 
+                  x:Name="BtnUpdate" Text="Update" 
+                  TextColor="SandyBrown" 
+                  Command="{Binding NavigateToEditAnimalPageCommand}"
+                  FontSize="16" FontAttributes="Bold"/>
+            <Button WidthRequest="150" HeightRequest="35" 
+                  Margin="20,20,20,0" 
+                  BackgroundColor="Red" 
+                  x:Name="BtnCancel" 
+                  Text="Cancel" 
+                  TextColor="SandyBrown" 
+                 Command="{Binding NavigateToHomePageCommand}"
+                  FontSize="16" 
+                  FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+
+    </Grid>
 
 </ContentPage>

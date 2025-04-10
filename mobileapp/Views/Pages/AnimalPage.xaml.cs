@@ -23,4 +23,10 @@ public partial class AnimalPage : ContentPage
             _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
         }
     }
+
+    private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var collectionView = (CollectionView)sender;
+        collectionView.SelectedItem = null;
+    }
 }
