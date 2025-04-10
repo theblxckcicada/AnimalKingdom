@@ -6,6 +6,7 @@ namespace mobileapp.Views.Controls;
 public partial class AnimalItemControl : ContentView
 {
     public event EventHandler<EventArgs> OnUpdate;
+    public event EventHandler<EventArgs> OnCancel;
     public AnimalItemControl() => InitializeComponent();
 
     public string Name
@@ -43,4 +44,9 @@ public partial class AnimalItemControl : ContentView
     {
         OnUpdate?.Invoke(sender, e);
     }
+    private void BtnCancel_Clicked(object sender, EventArgs e)
+    {
+        OnCancel?.Invoke(sender, e);
+    }
+
 }

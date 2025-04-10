@@ -19,7 +19,8 @@
             <Border Margin="10,0,10,0" Grid.Row="2">
                 <HorizontalStackLayout    Padding="5" Spacing="10" >
                     <Label Text="Category" Margin="0,5,0,0" Padding="10,5,5,0" WidthRequest="100"></Label>
-                    <Picker WidthRequest="250" x:Name="AnimalCategoryList"   SelectedIndexChanged="Category_SelectedIndexChanged">
+                    <Picker WidthRequest="250" x:Name="AnimalCategoryList"   SelectedIndexChanged="Category_SelectedIndexChanged"
+                            >
                     </Picker>
                 </HorizontalStackLayout>
             </Border>

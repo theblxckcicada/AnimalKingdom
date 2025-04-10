@@ -75,5 +75,25 @@ namespace mobileapp.Data
                 animals.Remove(animal);
             }
         }
+
+        public static List<Animal> Search(String searchValue)
+        {
+            // search on name first 
+            List<Animal> animals = GetAnimals().Where(animal => animal.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (animals.Count() <= 0)
+            {
+                // search on category 
+                animals = GetAnimals().Where(animal => animal.Category.ToString().Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+
+
+            }
+            if (animals.Count() <= 0)
+            {            // lastly search on description
+                animals = GetAnimals().Where(animal => animal.Description.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            }
+            return animals;
+        }
     }
 }

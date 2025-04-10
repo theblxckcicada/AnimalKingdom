@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mobileapp.Views.Pages.AnimalItemPage"
                       xmlns:controls="clr-namespace:mobileapp.Views.Controls"
+             Shell.NavBarIsVisible="False"
              x:Name="Page">
     <controls:AnimalItemControl x:Name="AnimalItemCtrl"
                             OnUpdate="AnimalItemCtrl_OnUpdate"
-                        >
+                             OnCancel="AnimalItemCtrl_OnCancel"
+                        />
 
-    </controls:AnimalItemControl>
+
 </ContentPage>

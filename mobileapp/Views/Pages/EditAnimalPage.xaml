@@ -5,11 +5,11 @@
              xmlns:controls="clr-namespace:mobileapp.Views.Controls"
              x:Name="Page">
 
-    <controls:AnimalControl x:Name="AnimalCtrl"
-                            OnSave="AnimalCtrl_OnSave"
-                            OnError="AnimalCtrl_OnError"
-                            OnCancel="AnimalCtrl_OnCancel"
-                            OnDelete="AnimalCtrl_OnDelete">
+    <controls:AnimalControl x:Name="AnimalEditCtrl"
+                            OnSave="AnimalEditCtrl_OnSave"
+                            OnError="AnimalEditCtrl_OnError"
+                            OnCancel="AnimalEditCtrl_OnCancel"
+                            OnDelete="AnimalEditCtrl_OnDelete">
 
     </controls:AnimalControl>
 </ContentPage>

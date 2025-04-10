@@ -24,40 +24,40 @@ public partial class EditAnimalPage : ContentPage
             animal = AnimalRepository.GetAnimal(Guid.Parse(value));
             if (animal is not null)
             {
-                AnimalCtrl.Name = animal.Name;
-                AnimalCtrl.Category = animal.Category;
-                AnimalCtrl.Image = animal.Image;
-                AnimalCtrl.Description = animal.Description;
+                AnimalEditCtrl.Name = animal.Name;
+                AnimalEditCtrl.Category = animal.Category;
+                AnimalEditCtrl.Image = animal.Image;
+                AnimalEditCtrl.Description = animal.Description;
             }
         }
 
     }
 
-    private async void AnimalCtrl_OnSave(object sender, EventArgs e)
+    private async void AnimalEditCtrl_OnSave(object sender, EventArgs e)
     {
         // Update a new Animal to the list 
         if (animal is not null)
         {
-            animal.Name = AnimalCtrl.Name;
-            animal.Image = AnimalCtrl.Image;
-            animal.Description = AnimalCtrl.Description;
-            animal.Category = AnimalCtrl.Category;
+            animal.Name = AnimalEditCtrl.Name;
+            animal.Image = AnimalEditCtrl.Image;
+            animal.Description = AnimalEditCtrl.Description;
+            animal.Category = AnimalEditCtrl.Category;
             AnimalRepository.UpdateAnimal(animal);
         }
         await Shell.Current.GoToAsync($"//{nameof(AnimalPage)}");
     }
 
-    private void AnimalCtrl_OnError(object sender, string e)
+    private void AnimalEditCtrl_OnError(object sender, string e)
     {
 
     }
 
-    private async void AnimalCtrl_OnCancel(object sender, EventArgs e)
+    private async void AnimalEditCtrl_OnCancel(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync($"//{nameof(AnimalPage)}");
     }
 
-    private async void AnimalCtrl_OnDelete(object sender, EventArgs e)
+    private async void AnimalEditCtrl_OnDelete(object sender, EventArgs e)
     {
         // delete the animal 
         if(animal is not null)
