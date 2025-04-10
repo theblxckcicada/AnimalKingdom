@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "5LZm4pfU1H8=",
+  "dgSpecHash": "UgsJWMCsRyQ=",
   "success": true,
   "projectFilePath": "E:\\Ova-Watch\\Personal Projects\\Development\\AnimalKingdom\\mobileapp\\mobileapp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER-PC\\.nuget\\packages\\communitytoolkit.maui\\9.1.1\\communitytoolkit.maui.9.1.1.nupkg.sha512",
     "C:\\Users\\USER-PC\\.nuget\\packages\\communitytoolkit.maui.core\\9.1.1\\communitytoolkit.maui.core.9.1.1.nupkg.sha512",
+    "C:\\Users\\USER-PC\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.0\\communitytoolkit.mvvm.8.4.0.nupkg.sha512",
     "C:\\Users\\USER-PC\\.nuget\\packages\\googlegson\\2.11.0.3\\googlegson.2.11.0.3.nupkg.sha512",
     "C:\\Users\\USER-PC\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
     "C:\\Users\\USER-PC\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.0\\microsoft.extensions.configuration.abstractions.9.0.0.nupkg.sha512",

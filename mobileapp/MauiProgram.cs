@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using mobileapp.Views.ViewModel;
 
 namespace mobileapp;
 
@@ -17,7 +18,11 @@ public static class MauiProgram
 			});
 
 		// Add Dependency injection 
-        builder.Services.AddSingleton(typeof(IFilePicker), FilePicker.Default);
+        builder.Services.AddSingleton(FilePicker.Default);
+
+		// Add View Model as SingleTon
+		builder.Services.AddSingleton<AnimalViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

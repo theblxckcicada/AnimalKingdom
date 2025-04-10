@@ -1,58 +1,26 @@
 using mobileapp.Data;
 using System.Collections.ObjectModel;
 using mobileapp.Models;
+using CommunityToolkit.Mvvm.Input;
+using mobileapp.Views.ViewModel;
+
 namespace mobileapp.Views.Pages;
 
 public partial class AnimalPage : ContentPage
 {
-    public AnimalPage()
+    private readonly AnimalViewModel _viewModel;
+    public AnimalPage(AnimalViewModel viewModel)
     {
         InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    protected override void OnAppearing()
+    private void AnimalSearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
-        base.OnAppearing();
-        LoadAnimals();
-        // Search the animal
-        if (!string.IsNullOrEmpty(AnimalSearchBar.Text))
+        if(_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
         {
-            var animals = AnimalRepository.Search(AnimalSearchBar.Text);
-            LoadAnimals(animals);
+            _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
         }
-      
-    }
-
-    public void LoadAnimals(List<Animal> animals = null)
-    {
-        var animalList = new ObservableCollection<Animal>(animals ?? AnimalRepository.GetAnimals());
-        AnimalListCollection.ItemsSource = animalList;
-    }
-
-    private async void AnimalListCollection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (AnimalListCollection.SelectedItem is not null)
-        {
-            await Shell.Current.GoToAsync($"{nameof(AnimalItemPage)}?Id={((Animal)AnimalListCollection.SelectedItem).Id}");
-            AnimalListCollection.SelectedItem = null;
-        }
-    }
-
-    private async void BtnAddAnimal_ClickedAsync(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(AddAnimalPage));
-    }
-
-    private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        // Search the animal
-        if (string.IsNullOrEmpty(e.NewTextValue))
-        {
-            LoadAnimals();
-            return;
-        }
-        var animals = AnimalRepository.Search(e.NewTextValue);
-        LoadAnimals(animals);
-
     }
 }
