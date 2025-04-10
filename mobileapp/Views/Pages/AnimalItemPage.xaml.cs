@@ -11,7 +11,6 @@ public partial class AnimalItemPage : ContentPage
     public AnimalItemPage()
     {
         InitializeComponent();
-
     }
     protected override void OnAppearing()
     {
@@ -39,4 +38,11 @@ public partial class AnimalItemPage : ContentPage
     {
         await Shell.Current.GoToAsync($"{nameof(EditAnimalPage)}?Id={animal.Id}");
     }
+
+
+    private async void AnimalItemCtrl_OnCancel(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync($"//{nameof(AnimalPage)}");
+    }
+
 }
