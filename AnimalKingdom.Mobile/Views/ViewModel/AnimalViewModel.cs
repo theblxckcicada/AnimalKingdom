@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using AnimalKingdom.Mobile.Data;
-using AnimalKingdom.Mobile.Models;
+using AnimalKingdom.Shared.Models;
 using AnimalKingdom.Mobile.Views.Pages;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;

@@ -1,9 +1,4 @@
-﻿using AnimalKingdom.Mobile.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AnimalKingdom.Shared.Models;
 
 namespace AnimalKingdom.Mobile.Data
 {
