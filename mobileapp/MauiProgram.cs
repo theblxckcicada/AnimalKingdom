@@ -21,8 +21,8 @@ public static class MauiProgram
         builder.Services.AddSingleton(FilePicker.Default);
 
 		// Add View Models
-		builder.Services.AddSingleton<AnimalViewModel>();
-		builder.Services.AddTransient<AnimalItemViewModel>();
+		builder.Services.AddSingleton<AnimalListViewModel>();
+		builder.Services.AddTransient<AnimalViewModel>();
 
 #if DEBUG
         builder.Logging.AddDebug();

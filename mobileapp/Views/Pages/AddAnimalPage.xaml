@@ -6,9 +6,5 @@
              Shell.NavBarIsVisible="False"
              Title="Add Animal">
     <controls:AnimalControl 
-        x:Name="AnimalCtrl"
-        OnCancel="AnimalCtrl_OnCancel"
-        OnSave="AnimalCtrl_OnSave">
-        
-    </controls:AnimalControl>
+       />
 </ContentPage>

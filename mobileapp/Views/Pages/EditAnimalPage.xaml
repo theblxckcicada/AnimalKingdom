@@ -3,13 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="mobileapp.Views.Pages.EditAnimalPage"
              xmlns:controls="clr-namespace:mobileapp.Views.Controls"
-             x:Name="Page">
+             xmlns:viewmodel="clr-namespace:mobileapp.Views.ViewModel"
+             x:DataType="viewmodel:AnimalViewModel"
+             Title="{Binding PageTitle}">
 
-    <controls:AnimalControl x:Name="AnimalEditCtrl"
-                            OnSave="AnimalEditCtrl_OnSave"
-                            OnError="AnimalEditCtrl_OnError"
-                            OnCancel="AnimalEditCtrl_OnCancel"
-                            OnDelete="AnimalEditCtrl_OnDelete">
-
-    </controls:AnimalControl>
+    <controls:AnimalControl />
 </ContentPage>

@@ -13,8 +13,8 @@
 
     <ShellContent
         Title="Menu"
-        ContentTemplate="{DataTemplate route:AnimalPage}"
-        Route="AnimalPage" />
+        ContentTemplate="{DataTemplate route:AnimalListPage}"
+        Route="AnimalListPage" />
 
 
 

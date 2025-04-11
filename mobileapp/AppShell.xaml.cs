@@ -12,7 +12,7 @@ public partial class AppShell : Shell
 		// Register routes 
 		Routing.RegisterRoute(nameof(AddAnimalPage),typeof(AddAnimalPage));
 		Routing.RegisterRoute(nameof(EditAnimalPage),typeof(EditAnimalPage));
-		Routing.RegisterRoute(nameof(AnimalPage),typeof(AnimalPage));
+		Routing.RegisterRoute(nameof(AnimalListPage),typeof(AnimalListPage));
 		Routing.RegisterRoute(nameof(AnimalItemPage),typeof(AnimalItemPage));
 	}
 }
