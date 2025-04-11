@@ -21,7 +21,7 @@
     <MauiXaml Update="Views\Pages\AnimalItemPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
-    <MauiXaml Update="Views\Pages\AnimalPage.xaml">
+    <MauiXaml Update="Views\Pages\AnimalListPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
     <MauiXaml Update="Views\Pages\EditAnimalPage.xaml">
