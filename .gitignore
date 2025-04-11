@@ -43,14 +43,14 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/mobileapp/local.settings.json
-/mobileapp/[Dd]ebug/
-/mobileapp/[Dd]ebugPublic/
-/mobileapp/[Rr]elease/
-/mobileapp/[Rr]eleases/
-/mobileapp/x64/
-/mobileapp/x86/
-/mobileapp/bld/
-/mobileapp/[Bb]in/
-/mobileapp/[Oo]bj/
-/mobileapp/[Ll]og/
+/AnimalKingdom.MObile/local.settings.json
+/AnimalKingdom.MObile/[Dd]ebug/
+/AnimalKingdom.MObile/[Dd]ebugPublic/
+/AnimalKingdom.MObile/[Rr]elease/
+/AnimalKingdom.MObile/[Rr]eleases/
+/AnimalKingdom.MObile/x64/
+/AnimalKingdom.MObile/x86/
+/AnimalKingdom.MObile/bld/
+/AnimalKingdom.MObile/[Bb]in/
+/AnimalKingdom.MObile/[Oo]bj/
+/AnimalKingdom.MObile/[Ll]og/
