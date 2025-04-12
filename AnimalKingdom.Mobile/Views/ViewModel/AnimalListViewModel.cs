@@ -1,9 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AnimalKingdom.Mobile.Data;
 using AnimalKingdom.Mobile.Views.Pages;
 using System.Collections.ObjectModel;
 using AnimalKingdom.Shared.Models;
+using AnimalKingdom.Mobile.Repository;
+using System.Threading.Tasks;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;
 
@@ -13,19 +14,20 @@ public partial class AnimalListViewModel : BaseViewModel
 
     private ObservableCollection<Animal> animalCollection = [];
 
-
-    public AnimalListViewModel()
+    private AnimalRepository animalRepository;
+    public AnimalListViewModel(AnimalRepository animalRepository)
     {
-        AnimalRepository.AnimalsUpdated += OnAnimalsUpdated;
+        this.animalRepository = animalRepository;
+        animalRepository.AnimalsUpdated += OnAnimalsUpdated;
 
         LoadAnimals();
     }
 
 
-    private void LoadAnimals(string searchText = "")
+    private async Task LoadAnimals(string searchText = "")
     {
 
-       AnimalCollection = new (string.IsNullOrEmpty(searchText) ? AnimalRepository.GetAnimals() : AnimalRepository.Search(searchText));
+       AnimalCollection = [.. string.IsNullOrEmpty(searchText) ?await  animalRepository.GetAnimals() : await animalRepository.Search(searchText)];
 
     }
 
