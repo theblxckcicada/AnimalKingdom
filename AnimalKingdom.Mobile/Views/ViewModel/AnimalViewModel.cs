@@ -1,8 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AnimalKingdom.Mobile.Data;
 using AnimalKingdom.Shared.Models;
 using AnimalKingdom.Mobile.Views.Pages;
+using AnimalKingdom.Mobile.Repository;
+using System.Threading.Tasks;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;
 
@@ -28,9 +29,11 @@ public partial class AnimalViewModel : BaseViewModel
     public AnimalCategory category;
 
 	public List<AnimalCategory> CategoryList => [.. Enum.GetValues<AnimalCategory>()];
-    public AnimalViewModel()
-    {
 
+    private AnimalRepository animalRepository;
+    public AnimalViewModel(AnimalRepository animalRepository)
+    {
+        this.animalRepository = animalRepository;
     }
 
 
@@ -49,11 +52,11 @@ public partial class AnimalViewModel : BaseViewModel
 
  
 
-    private void LoadAnimal(string id)
+    private async Task LoadAnimal(string id)
     {
         if (Guid.TryParse(id, out var guid))
         {
-            Animal = AnimalRepository.GetAnimal(guid);
+            Animal = await  animalRepository.GetAnimal(guid);
             Image = Animal.Image;
             Description = Animal.Description;
             Category = Animal.Category;
@@ -104,7 +107,7 @@ public partial class AnimalViewModel : BaseViewModel
             Animal.Image = Image;
 
             // update the animal 
-            AnimalRepository.UpdateAnimal(Animal);
+            await animalRepository.UpdateAnimal(Animal);
         }
         else
         {
@@ -117,7 +120,7 @@ public partial class AnimalViewModel : BaseViewModel
                 Description = Description,
                 Category = Category,
             };
-            AnimalRepository.AddAnimal(animal);
+            await animalRepository.AddAnimal(animal);
         }
         await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}");
 

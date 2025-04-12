@@ -1,6 +1,6 @@
-﻿namespace AnimalKingdom.Shared.Models
+﻿namespace AnimalKingdom.API.Models
 {
-    public class Animal
+    public class Animal : IEntityBase<Guid>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
