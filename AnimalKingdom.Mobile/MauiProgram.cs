@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using AnimalKingdom.Mobile.Views.ViewModel;
 using AnimalKingdom.Mobile.Repository;
+using AnimalKingdom.Mobile.Views.Controls;
 
 namespace AnimalKingdom.Mobile;
 
@@ -25,7 +26,8 @@ public static class MauiProgram
 
 		// Add View Models
 		builder.Services.AddSingleton<AnimalListViewModel>();
-		builder.Services.AddTransient<AnimalViewModel>();
+		builder.Services.AddSingleton<AnimalViewModel>();
+
 
 #if DEBUG
         builder.Logging.AddDebug();

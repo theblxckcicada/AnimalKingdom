@@ -3,13 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using AnimalKingdom.Shared.Models;
 using AnimalKingdom.Mobile.Views.Pages;
 using AnimalKingdom.Mobile.Repository;
-using System.Threading.Tasks;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;
 
 
 [QueryProperty(nameof(Animal.Id), nameof(Animal.Id))]
-public partial class AnimalViewModel : BaseViewModel
+public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseViewModel
 {
     [ObservableProperty]
     private Animal animal;
@@ -18,24 +17,18 @@ public partial class AnimalViewModel : BaseViewModel
     private string pageTitle;
     private string id;
 
-    	[ObservableProperty]
-	public string name;
-	[ObservableProperty]
-	public string description;
     [ObservableProperty]
-	public string image;
+    private string name;
+    [ObservableProperty]
+    private string description;
+    [ObservableProperty]
+    private string image;
 
     [ObservableProperty]
-    public AnimalCategory category;
+    private AnimalCategory category;
 
-	public List<AnimalCategory> CategoryList => [.. Enum.GetValues<AnimalCategory>()];
-
-    private AnimalRepository animalRepository;
-    public AnimalViewModel(AnimalRepository animalRepository)
-    {
-        this.animalRepository = animalRepository;
-    }
-
+    [ObservableProperty]
+    private List<AnimalCategory> categoryList;
 
     public string Id
     {
@@ -46,24 +39,45 @@ public partial class AnimalViewModel : BaseViewModel
                 return;
 
             id = value;
-            LoadAnimal(value);
+            _ = LoadAnimalAsync(id); // fire and forget safely
         }
     }
 
- 
-
-    private async Task LoadAnimal(string id)
+    private async Task LoadAnimalAsync(string id)
     {
-        if (Guid.TryParse(id, out var guid))
+        await RunBusyAsync(async () =>
         {
-            Animal = await  animalRepository.GetAnimal(guid);
-            Image = Animal.Image;
-            Description = Animal.Description;
-            Category = Animal.Category;
-            Name = Animal.Name;
-            PageTitle = Animal?.Name ?? string.Empty;
-        }
+            Animal? animal = null;
+
+            if (Guid.TryParse(id, out var guid))
+            {
+                // Use existing animal if already loaded
+                if (Animal is not null && Animal.Id == guid)
+                {
+                    animal = Animal;
+                }
+                else
+                {
+                    animal = await animalRepository.GetAnimal(guid);
+                }
+            }
+
+            // Set category list regardless of animal loading
+            categoryList = [.. Enum.GetValues<AnimalCategory>()];
+
+            // If we couldn't load an animal, exit gracefully
+            if (animal is null)
+                return;
+
+            // Update ViewModel properties
+            Animal = animal;
+            Image = animal.Image;
+            Description = animal.Description;
+            Category = animal.Category;
+            Name = animal.Name;
+        });
     }
+
 
     [RelayCommand]
     private async Task LoadImageAsync()
@@ -99,42 +113,48 @@ public partial class AnimalViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveAnimalToListAsync()
     {
-        if (Animal is not null)
+        await RunBusyAsync(async () =>
         {
-            Animal.Name = Name;
-            Animal.Description = Description;
-            Animal.Category = Category;
-            Animal.Image = Image;
-
-            // update the animal 
-            await animalRepository.UpdateAnimal(Animal);
-        }
-        else
-        {
-            // create a new animal 
-            Animal animal = new()
+            if (Animal is not null)
             {
-                Id = Guid.NewGuid(),
-                Name = Name,
-                Image = Image,
-                Description = Description,
-                Category = Category,
-            };
-            await animalRepository.AddAnimal(animal);
-        }
-        await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}");
+                // Update existing animal
+                Animal.Name = Name;
+                Animal.Description = Description;
+                Animal.Category = Category;
+                Animal.Image = Image;
 
+                await animalRepository.UpdateAnimal(Animal);
+            }
+            else
+            {
+                // Create new animal
+                Animal newAnimal = new()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = Name,
+                    Image = Image,
+                    Description = Description,
+                    Category = Category,
+                };
+
+                await animalRepository.AddAnimal(newAnimal);
+            }
+
+            // Navigate back to the list page
+            await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}");
+        });
     }
+
 
     [RelayCommand]
     private async Task NavigateToEditAnimalPageAsync()
     {
-        await Shell.Current.GoToAsync($"{nameof(EditAnimalPage)}?Id={Animal.Id}");
+        await RunBusyAsync(async () => await Shell.Current.GoToAsync($"{nameof(EditAnimalPage)}?Id={Animal.Id}"));
     }
 
     [RelayCommand]
     private async Task NavigateToHomePageAsync()
     {
-        await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}");
+        await RunBusyAsync(async () => await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}"));
     }
 }

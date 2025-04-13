@@ -58,7 +58,7 @@ public class AnimalController(IMediator mediator) : EntityControllerBase<Animal,
             "desc",
             StringComparison.InvariantCultureIgnoreCase
         );
-        var filter = query.Filter ?? string.Empty;
+        var filter = (query.Filter ?? string.Empty).ToLower();
 
         return new QueryEntitiesRequest<Animal, Guid>
         {
@@ -78,7 +78,10 @@ public class AnimalController(IMediator mediator) : EntityControllerBase<Animal,
                 else
                     return q.OrderBy(lambda);
             },
-            Filter = x => x.Name.ToString().Contains(filter),
+            Filter = x =>
+                x.Name.ToString().ToLower().Contains(filter.ToLower())
+                || x.Category.ToString().ToLower().Contains(filter.ToLower())
+                || x.Description.ToString().ToLower().Contains(filter.ToLower())
         };
     }
 }
