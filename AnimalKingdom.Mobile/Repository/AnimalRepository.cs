@@ -5,22 +5,18 @@ namespace AnimalKingdom.Mobile.Repository
 {
     public class AnimalRepository
     {
-        private readonly string url = "https://10.0.2.2:7148/api/animal";
+        private readonly string url = "https://10.0.2.2:7100/api/animal";
         public event Action? AnimalsUpdated;
 
         public HttpClient httpClient;
         public AnimalRepository(HttpClient httpClient)
         {
-#if DEBUG
             // Only bypass SSL in debug mode
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
             };
             this.httpClient = new HttpClient(handler);
-#else
-        _httpClient = httpClient;
-#endif
         }
 
         public async Task<List<Animal>> GetAnimals()
@@ -53,8 +49,8 @@ namespace AnimalKingdom.Mobile.Repository
 
                 response.EnsureSuccessStatusCode();
 
-                var responseBody = await response.Content.ReadFromJsonAsync<Animal>();
-                return responseBody;
+                return await response.Content.ReadFromJsonAsync<Animal>();
+
 
             }
             catch (HttpRequestException e)
@@ -69,7 +65,7 @@ namespace AnimalKingdom.Mobile.Repository
             // query the animals from the api endpoint 
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, animal);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"{url}/{animal.Id}", animal);
 
                 response.EnsureSuccessStatusCode();
 
@@ -90,7 +86,7 @@ namespace AnimalKingdom.Mobile.Repository
             // find the animal 
             try
             {
-                HttpResponseMessage response = await httpClient.PutAsJsonAsync(url, animal);
+                HttpResponseMessage response = await httpClient.PutAsJsonAsync($"{url}/{animal.Id}", animal);
 
                 response.EnsureSuccessStatusCode();
 
@@ -139,12 +135,14 @@ namespace AnimalKingdom.Mobile.Repository
             try
             {
 
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync(url, query);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"{url}/query", query);
 
                 response.EnsureSuccessStatusCode();
 
                 var queryResponse = await response.Content.ReadFromJsonAsync<QueryEntitiesResponse<Animal>>();
-                return (List<Animal>)queryResponse!.Entities;
+                var animals = (List<Animal>)queryResponse!.Entities;
+
+                return animals;
 
             }
             catch (HttpRequestException e)

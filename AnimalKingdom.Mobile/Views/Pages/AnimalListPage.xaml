@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:AnimalKingdom.Shared.Models;assembly=AnimalKingdom.Shared"
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalListViewModel"
+             xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
              
     Shell.NavBarIsVisible="False"
              Title="Animal Kingdom">
@@ -16,42 +17,64 @@
             HeightRequest="50"  
             Margin="0,0,20,10"
                            >
-            <SearchBar  BackgroundColor="White" 
+            <SearchBar  
+                        IsEnabled="{Binding IsNotBusy}"
+                        IsReadOnly="{Binding IsBusy}"
+                        BackgroundColor="White" 
                         Placeholder="E.g Leopard"
                         x:Name="AnimalSearchBar"
                         TextChanged="AnimalSearchBar_TextChanged"
                         TextColor="DarkBlue" 
                      />
         </HorizontalStackLayout>
+
         <CollectionView Margin="0,20,0,0" 
                         ItemsSource="{Binding AnimalCollection}" 
                         SelectionChangedCommand="{Binding AnimalSelectionChangedCommand}" 
                    SelectionChanged="CollectionView_SelectionChanged"
                          SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
-                        Grid.Row="1" SelectionMode="Single">
+                        Grid.Row="1" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Animal">
-                    <Border HeightRequest="90" Margin="15,5,15,5" BackgroundColor="NavajoWhite">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
-                        </Border.StrokeShape>
-                        <Grid RowDefinitions="*" ColumnDefinitions="*,120">
-                            <VerticalStackLayout Padding="20" Grid.Column="0">
-                                <Label  Text="{Binding Category}" FontSize="14"/>
-                                <Label Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
-                            </VerticalStackLayout>
-                            <Border Grid.Column="1" HeightRequest="100">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="20" />
-                                </Border.StrokeShape>
-                                <Image Source="{Binding Image}"  Aspect="AspectFill"/>
-                            </Border>
-                        </Grid>
-                    </Border>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Delete" BackgroundColor="Red"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AnimalListViewModel}}, Path=DeleteAnimalCommand}"
+                                             CommandParameter="{Binding .}"/>
+                                <SwipeItem Text="Edit" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AnimalListViewModel}}, Path=AnimalSelectionChangedCommand}"
+                                            CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
 
+                        <Border HeightRequest="90" Margin="15,5,15,5" BackgroundColor="NavajoWhite" >
+
+
+                            <Grid RowDefinitions="*" ColumnDefinitions="*,120">
+
+                                <VerticalStackLayout Padding="20" Grid.Column="0">
+                                    <Label  Text="{Binding Category}" FontSize="14"/>
+                                    <Label Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
+                                </VerticalStackLayout>
+                                <Border Grid.Column="1" HeightRequest="100">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="20" />
+                                    </Border.StrokeShape>
+                                    <Image Source="{Binding Image}"  Aspect="AspectFill"/>
+                                </Border>
+                            </Grid>
+
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+
+                        </Border>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <controls:AnimalLoadingControl />
 
         <Button Text="Add" WidthRequest="250" Grid.Row="2" HeightRequest="50" 
                         TextColor="SandyBrown" FontAttributes="Bold" 

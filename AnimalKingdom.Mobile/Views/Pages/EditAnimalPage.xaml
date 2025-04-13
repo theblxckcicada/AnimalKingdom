@@ -5,7 +5,8 @@
              xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalViewModel"
+               Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <controls:AnimalControl />
+    <controls:AnimalControl  />
 </ContentPage>

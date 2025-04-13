@@ -5,6 +5,7 @@ namespace AnimalKingdom.Mobile.Views.Pages;
 public partial class AnimalListPage : ContentPage
 {
     private readonly AnimalListViewModel _viewModel;
+    private CancellationTokenSource _debounceCts;
     public AnimalListPage(AnimalListViewModel viewModel)
     {
          InitializeComponent();
@@ -13,13 +14,29 @@ public partial class AnimalListPage : ContentPage
     }
 
 
-    private void AnimalSearchBar_TextChanged(object sender, TextChangedEventArgs e)
+
+
+    private async void AnimalSearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if(_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
+        _debounceCts?.Cancel(); // Cancel any ongoing delay
+        _debounceCts = new CancellationTokenSource();
+        var token = _debounceCts.Token;
+
+        try
         {
-            _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
+            await Task.Delay(300, token); // Wait 300ms, or cancel if new input comes in
+
+            if (_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
+            {
+                _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // Ignore the exception, since it's expected during rapid typing
         }
     }
+
 
     private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
