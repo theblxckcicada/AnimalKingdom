@@ -7,10 +7,18 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
 {
     public AnimalKingdomDbContext CreateDbContext(string[] args)
     {
-        const string DefaultConnectionString = "Filename=Data\\AnimalKingdom.db";
+        // Get Default SQL Server  configuration
+        var config  = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.Development.json", optional: false)
+            .Build();
+
+        var DefaultConnectionString = config.GetConnectionString("AnimalKingdom");
+        // var DefaultConnectionString =
+        //     "Server=localhost;Database=master;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;";
 
         var optionsBuilder = new DbContextOptionsBuilder<AnimalKingdomDbContext>();
-        optionsBuilder.UseSqlite(DefaultConnectionString);
+        optionsBuilder.UseSqlServer(DefaultConnectionString);
 
         return new AnimalKingdomDbContext(optionsBuilder.Options);
     }

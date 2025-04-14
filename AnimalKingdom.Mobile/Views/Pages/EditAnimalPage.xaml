@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalViewModel"
+              BackgroundColor="BurlyWood"
                Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 

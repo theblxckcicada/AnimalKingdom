@@ -56,11 +56,7 @@ public partial class AnimalListViewModel : BaseViewModel
 
     }
 
-    [RelayCommand]
-    private async Task NavigateToAddAnimalPageAsync()
-    {
-        await RunBusyAsync(async () => await Shell.Current.GoToAsync(nameof(AddAnimalPage)));
-    }
+
 
     [RelayCommand]
     private void AnimalSearchTextChanged(string text)

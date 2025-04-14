@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AnimalKingdom.Mobile.Views.Pages.HomePage"
+             xmlns:fonts="clr-namespace:Fonts"
+             Title="Animal Kingdom"
+             xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
+             x:DataType="viewmodel:HomeViewModel"
+             BackgroundImageSource="{Binding RandomImage}"
+                   Shell.NavBarIsVisible="False"
+             >
+
+    <Grid >
+        <Grid BackgroundColor="Transparent"  HorizontalOptions="Start" x:Name="GridMenu" IsVisible="{Binding IsMenuVisible}">
+            <VerticalStackLayout Spacing="10" WidthRequest="250">
+                <HorizontalStackLayout  HorizontalOptions="End" >
+                    <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  
+                            Text="{x:Static fonts:IconFont.Xmark}" 
+                            Clicked="Update_Layout_Clicked"
+                                FontSize="25" Margin="15,15,-15,15" BackgroundColor="Transparent"
+                            />
+                </HorizontalStackLayout>
+                <VerticalStackLayout Margin="10" Spacing="10" >
+                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
+                            Text="Home" Padding="10" FontSize="18" FontAttributes="Bold" TextColor="DarkBlue" 
+                            Command="{Binding NavigateToHomePageCommand}"
+                             Clicked="Update_Layout_Clicked"/>
+                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
+                            Text="Explore Wildlife" Padding="10" FontSize="18" 
+                            FontAttributes="Bold" TextColor="DarkBlue"
+                            Command="{Binding NavigateToAnimalListCommand}"
+                             Clicked="Update_Layout_Clicked"/>
+                    <Button BackgroundColor="BurlyWood" CornerRadius="10"
+                            Text="Log Wildlife" Padding="10" FontSize="18" 
+                            FontAttributes="Bold" TextColor="DarkBlue"
+                            Command="{Binding NavigateToAddAnimalPageCommand}"
+                             Clicked="Update_Layout_Clicked"
+                            />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+        <Grid RowDefinitions="*,500" x:Name="GridContent">
+            <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
+                <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  Text="{x:Static fonts:IconFont.BarsStaggered}" IsVisible="{Binding IsMenuNotVisible}"
+                        Clicked="Update_Layout_Clicked"
+                    FontSize="25" Margin="15" BackgroundColor="Transparent" />
+            </Grid>
+            <Grid x:Name="GridLabel" Grid.Row="1" >
+                <Border StrokeShape="RoundRectangle 120" WidthRequest="460" Margin="0,0,0,0" TranslationY="200" BackgroundColor="BurlyWood" Opacity="0.7">
+                </Border>
+
+                <VerticalStackLayout HorizontalOptions="Center" Margin="0,0,0,0" TranslationY="200">
+                    <VerticalStackLayout Margin="0,30,0,30">
+                        <Label Text="Wonders of the Wild" Padding="10" HorizontalOptions="Center" FontSize="28" FontAttributes="Bold" TextColor="DarkBlue"/>
+                        <Label Text="Discover the Wild Like Never Before." TextColor="white" FontSize="16" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                    <Button CornerRadius="50" Text="Explore" WidthRequest="300" HeightRequest="35" Command="{Binding NavigateToAnimalListCommand}" BackgroundColor="DarkBlue" TextColor="SandyBrown" FontAttributes="Bold"></Button>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Grid>
+    </Grid>
+
+</ContentPage>

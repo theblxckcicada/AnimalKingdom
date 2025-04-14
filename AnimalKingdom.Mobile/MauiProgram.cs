@@ -13,10 +13,16 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>().UseMauiCommunityToolkit()
+			
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+
+				// add icons
+				fonts.AddFont("Brands-Regular-400.otf", "BrandsRegular");
+                fonts.AddFont("Free-Regular-400.otf", "FreeRegular");
+				fonts.AddFont("Free-Solid-900.otf", "FreeSolid");
 			});
 
 		// Add Dependency injection 
@@ -26,7 +32,9 @@ public static class MauiProgram
 
 		// Add View Models
 		builder.Services.AddSingleton<AnimalListViewModel>();
-		builder.Services.AddSingleton<AnimalViewModel>();
+        builder.Services.AddSingleton<HomeViewModel>();
+        builder.Services.AddTransient<AnimalViewModel>();
+		
 
 
 #if DEBUG

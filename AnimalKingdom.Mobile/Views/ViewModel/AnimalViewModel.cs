@@ -8,7 +8,7 @@ namespace AnimalKingdom.Mobile.Views.ViewModel;
 
 
 [QueryProperty(nameof(Animal.Id), nameof(Animal.Id))]
-public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseViewModel
+public partial class AnimalViewModel : BaseViewModel
 {
     [ObservableProperty]
     private Animal animal;
@@ -29,6 +29,17 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
 
     [ObservableProperty]
     private List<AnimalCategory> categoryList;
+
+    AnimalRepository animalRepository;
+
+    public AnimalViewModel(AnimalRepository animalRepository)
+    {
+        // Set category list regardless of animal loading
+        categoryList = [.. Enum.GetValues<AnimalCategory>()];
+        this.animalRepository = animalRepository;
+  
+
+    }
 
     public string Id
     {
@@ -62,20 +73,24 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
                 }
             }
 
-            // Set category list regardless of animal loading
-            categoryList = [.. Enum.GetValues<AnimalCategory>()];
+
 
             // If we couldn't load an animal, exit gracefully
             if (animal is null)
+            {
+                Category = AnimalCategory.Herbivore;
+                Image = await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
                 return;
+            }
 
             // Update ViewModel properties
             Animal = animal;
-            Image = animal.Image;
+            Image = animal.Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
             Description = animal.Description;
             Category = animal.Category;
             Name = animal.Name;
         });
+
     }
 
 
@@ -92,23 +107,12 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
         {
 
             using var stream = await result.OpenReadAsync();
-
-            // Reset the stream position to beginning (since ImageSource.FromStream might have read it)
-            stream.Position = 0;
-
-            // Convert stream to byte array
-            using var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
-            byte[] imageBytes = memoryStream.ToArray();
-
-            // Convert to base64 string
-            string base64String = $"data:image/jpeg;base64,{Convert.ToBase64String(imageBytes)}";
-
             // set the image to the field
-            Image = base64String;
+            Image = await ConvertImageToBase64String(stream);
 
         }
     }
+ 
 
     [RelayCommand]
     private async Task SaveAnimalToListAsync()
@@ -121,7 +125,7 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
                 Animal.Name = Name;
                 Animal.Description = Description;
                 Animal.Category = Category;
-                Animal.Image = Image;
+                Animal.Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
 
                 await animalRepository.UpdateAnimal(Animal);
             }
@@ -132,7 +136,7 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
                 {
                     Id = Guid.NewGuid(),
                     Name = Name,
-                    Image = Image,
+                    Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg")),
                     Description = Description,
                     Category = Category,
                 };
@@ -141,7 +145,7 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
             }
 
             // Navigate back to the list page
-            await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}");
+            await Shell.Current.GoToAsync($"//{nameof(HomePage)}/{nameof(AnimalListPage)}");
         });
     }
 
@@ -149,12 +153,8 @@ public partial class AnimalViewModel(AnimalRepository animalRepository) : BaseVi
     [RelayCommand]
     private async Task NavigateToEditAnimalPageAsync()
     {
-        await RunBusyAsync(async () => await Shell.Current.GoToAsync($"{nameof(EditAnimalPage)}?Id={Animal.Id}"));
+        await Shell.Current.GoToAsync($"{nameof(EditAnimalPage)}?Id={Animal.Id}");
     }
 
-    [RelayCommand]
-    private async Task NavigateToHomePageAsync()
-    {
-        await RunBusyAsync(async () => await Shell.Current.GoToAsync($"//{nameof(AnimalListPage)}"));
-    }
+
 }

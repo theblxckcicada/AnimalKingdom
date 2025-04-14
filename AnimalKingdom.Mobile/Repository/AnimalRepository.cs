@@ -65,7 +65,7 @@ namespace AnimalKingdom.Mobile.Repository
             // query the animals from the api endpoint 
             try
             {
-                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"{url}/{animal.Id}", animal);
+                HttpResponseMessage response = await httpClient.PostAsJsonAsync($"{url}", animal);
 
                 response.EnsureSuccessStatusCode();
 

@@ -13,9 +13,8 @@ internal static class IServiceConfigurationExtensions
         bool isDevelopment
     )
     {
-        var connectionString = configuration.GetConnectionString("AnimalKingdom");
         services.AddDbContext<AnimalKingdomDbContext>(options =>
-            options.UseSqlite(connectionString)
+            options.UseSqlServer(configuration.GetConnectionString("AnimalKingdom"))
         );
         services.Add(
             new ServiceDescriptor(

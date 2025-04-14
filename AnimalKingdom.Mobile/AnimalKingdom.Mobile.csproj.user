@@ -30,5 +30,8 @@
     <MauiXaml Update="Views\Pages\EditAnimalPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
   </ItemGroup>
 </Project>
