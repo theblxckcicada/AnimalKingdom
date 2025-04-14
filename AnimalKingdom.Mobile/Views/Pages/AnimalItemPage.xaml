@@ -6,19 +6,10 @@
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalViewModel"            
              Shell.NavBarIsVisible="False"
+              BackgroundColor="BurlyWood"
              Title="{Binding PageTitle}">
     <Grid RowDefinitions="200,50,450,80" ColumnDefinitions="*">
         <Grid >
-            <Border
-               StrokeShape="RoundRectangle 200"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Margin="-200,50,50,10"
-               WidthRequest="400"
-               HeightRequest="400"
-               Background="SandyBrown">
-
-            </Border>
             <Border
                   StrokeShape="RoundRectangle 250"
                   VerticalOptions="Center"
@@ -26,6 +17,7 @@
                   Margin="-200,50,50,10"
                   WidthRequest="400"
                   HeightRequest="400"
+                BackgroundColor="SandyBrown"
             >
                 <Image Source="{Binding Image}"
                      Aspect="AspectFill" 
@@ -36,9 +28,9 @@
         </Grid>
 
         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Padding="20" Grid.Row="1" Margin="0,200,0,0" HeightRequest="50">
-            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="28" TextColor="SandyBrown" FontAttributes="Bold">
+            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="28" TextColor="DarkBlue" FontAttributes="Bold">
             </Label>
-            <Label Text="{Binding Category}" HorizontalOptions="Center" TextColor="Gray">
+            <Label Text="{Binding Category}" HorizontalOptions="Center" >
             </Label>
         </VerticalStackLayout>
 

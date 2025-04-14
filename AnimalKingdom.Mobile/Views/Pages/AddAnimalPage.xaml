@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AnimalKingdom.Mobile.Views.Pages.AddAnimalPage"
              xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
+             xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
+             x:DataType="viewmodel:AnimalViewModel"
+                  BackgroundColor="BurlyWood"
              Shell.NavBarIsVisible="False"
              Title="Add Animal">
     <controls:AnimalControl 

@@ -14,7 +14,15 @@ public partial class AnimalListPage : ContentPage
     }
 
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
 
+        if (BindingContext is AnimalListViewModel viewModel)
+        {
+            viewModel.GetRandomImage();
+        }
+    }
 
     private async void AnimalSearchBar_TextChanged(object sender, TextChangedEventArgs e)
     {

@@ -6,11 +6,11 @@
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalListViewModel"
              xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
-             
-    Shell.NavBarIsVisible="False"
+           
+BackgroundImageSource="{Binding RandomImage}"
              Title="Animal Kingdom">
 
-    <Grid RowDefinitions="50,*,80" ColumnDefinitions="*"  BackgroundColor="SandyBrown">
+    <Grid RowDefinitions="50,*,80" ColumnDefinitions="*" IgnoreSafeArea="True">
         <HorizontalStackLayout 
             Grid.Row="0"   
             VerticalOptions="Center"  
@@ -20,11 +20,13 @@
             <SearchBar  
                         IsEnabled="{Binding IsNotBusy}"
                         IsReadOnly="{Binding IsBusy}"
-                        BackgroundColor="White" 
+             
+        
+                BackgroundColor="NavajoWhite"
                         Placeholder="E.g Leopard"
                         x:Name="AnimalSearchBar"
                         TextChanged="AnimalSearchBar_TextChanged"
-                        TextColor="DarkBlue" 
+                  
                      />
         </HorizontalStackLayout>
 
