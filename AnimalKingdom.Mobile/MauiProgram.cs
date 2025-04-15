@@ -34,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AnimalListViewModel>();
         builder.Services.AddSingleton<HomeViewModel>();
         builder.Services.AddTransient<AnimalViewModel>();
+		builder.Services.AddTransient<AnimalControl>();
 		
 
 

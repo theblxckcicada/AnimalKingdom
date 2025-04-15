@@ -21,6 +21,6 @@ public class GetEntitiesHandler<TModel, TKey>(IQueryRepository query, IMapper ma
     )
     {
         var entities = query.Query<TModel>().ToList();
-        return entities.Select(account => mapper.Map<TModel>(account)).ToList();
+        return [.. entities.Select(mapper.Map<TModel>)];
     }
 }

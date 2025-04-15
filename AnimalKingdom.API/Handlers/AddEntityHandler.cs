@@ -11,6 +11,7 @@ public record AddEntityRequest<TModel, TKey> : IRequest<CommandResponse<TModel>>
     where TModel : class, IEntityBase<TKey>
 {
     public TModel Entity { get; init; } = default!;
+    public List<TModel> Entities { get; init; } = default!;
 }
 
 public class AddEntityHandler<TModel, TKey>(
@@ -31,6 +32,26 @@ public class AddEntityHandler<TModel, TKey>(
         CancellationToken cancellationToken
     )
     {
+        if (request.Entities.Count > 0)
+        {
+            var entities = await PopulateEntitiesAsync(request.Entities, cancellationToken);
+            var bulkValidationResult = await ValidateEntitiesAsync(entities, cancellationToken);
+
+            var notValidated = bulkValidationResult.Where(x => !x.IsValid).ToList();
+            if (notValidated.Count > 0)
+            {
+                return new CommandResponse<TModel>
+                {
+                    Entities = entities,
+                    ValidationResult = bulkValidationResult.FirstOrDefault(),
+                };
+            }
+
+            var bulkAdded = command.AddMany(entities);
+            _ = await command.SaveChangesAsync(cancellationToken);
+            return new CommandResponse<TModel> { Entities = bulkAdded };
+        }
+
         var entity = await PopulateEntityAsync(request.Entity, cancellationToken);
         var validationResult = await ValidateEntityAsync(entity, cancellationToken);
 
@@ -43,10 +64,10 @@ public class AddEntityHandler<TModel, TKey>(
             };
         }
 
-        var added = command.AddOne(mapper.Map<TModel>(entity));
+        var added = command.AddOne(entity);
         _ = await command.SaveChangesAsync(cancellationToken);
 
-        return new CommandResponse<TModel> { Entity = mapper.Map<TModel>(added) };
+        return new CommandResponse<TModel> { Entity = added };
     }
 
     protected virtual async Task<TModel> PopulateEntityAsync(
@@ -57,11 +78,40 @@ public class AddEntityHandler<TModel, TKey>(
         return await Task.FromResult(keyGenerator.Generate(entity));
     }
 
+    protected virtual async Task<List<TModel>> PopulateEntitiesAsync(
+        List<TModel> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            entities[i] = await PopulateEntityAsync(entities[i], cancellationToken);
+        }
+
+        return entities;
+    }
+
     protected virtual async Task<ValidationResult> ValidateEntityAsync(
         TModel entity,
         CancellationToken cancellationToken
     )
     {
         return await validator.ValidateAsync(entity, cancellationToken);
+    }
+
+    protected virtual async Task<List<ValidationResult>> ValidateEntitiesAsync(
+        List<TModel> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        var results = new List<ValidationResult>();
+
+        foreach (var entity in entities)
+        {
+            var result = await ValidateEntityAsync(entity, cancellationToken);
+            results.Add(result);
+        }
+
+        return results;
     }
 }

@@ -12,6 +12,7 @@ public record UpdateEntityRequest<TModel, TKey> : IRequest<CommandResponse<TMode
 {
     public TKey Id { get; init; } = default!;
     public TModel Entity { get; init; } = default!;
+    public List<TModel> Entities { get; init; } = default!;
 }
 
 public class UpdateEntityHandler<TModel, TKey>(
@@ -33,6 +34,26 @@ public class UpdateEntityHandler<TModel, TKey>(
         CancellationToken cancellationToken
     )
     {
+        if (request.Entities.Count > 0)
+        {
+            var entities = request.Entities;
+            var bulkValidationResult = await ValidateEntitiesAsync(entities, cancellationToken);
+
+            var notValidated = bulkValidationResult.Where(x => !x.IsValid).ToList();
+            if (notValidated.Count > 0)
+            {
+                return new CommandResponse<TModel>
+                {
+                    Entities = entities,
+                    ValidationResult = bulkValidationResult.FirstOrDefault(),
+                };
+            }
+
+            var bulkUpdated = command.UpdateMany(entities);
+            _ = await command.SaveChangesAsync(cancellationToken);
+            return new CommandResponse<TModel> { Entities = bulkUpdated };
+        }
+
         var entity = request.Entity;
 
         var validationResult = await ValidateEntityAsync(entity, cancellationToken);
@@ -46,10 +67,10 @@ public class UpdateEntityHandler<TModel, TKey>(
             };
         }
 
-        var updated = command.UpdateOne(mapper.Map<TModel>(entity));
+        var updated = command.UpdateOne(entity);
         _ = await command.SaveChangesAsync(cancellationToken);
 
-        return new CommandResponse<TModel> { Entity = mapper.Map<TModel>(updated) };
+        return new CommandResponse<TModel> { Entity = updated };
     }
 
     protected virtual async Task<ValidationResult> ValidateEntityAsync(
@@ -58,5 +79,21 @@ public class UpdateEntityHandler<TModel, TKey>(
     )
     {
         return await validator.ValidateAsync(entity, cancellationToken);
+    }
+
+    protected virtual async Task<List<ValidationResult>> ValidateEntitiesAsync(
+        List<TModel> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        var results = new List<ValidationResult>();
+
+        foreach (var entity in entities)
+        {
+            var result = await ValidateEntityAsync(entity, cancellationToken);
+            results.Add(result);
+        }
+
+        return results;
     }
 }

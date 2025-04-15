@@ -24,7 +24,7 @@ public class GetEntityHandler<TModel, TKey>(IQueryRepository query, IMapper mapp
         CancellationToken cancellationToken
     )
     {
-        var account = query.Query<TModel>().FirstOrDefault(x => x.Id.Equals(request.Id));
-        return mapper.Map<TModel>(account);
+        var results = query.Query<TModel>().FirstOrDefault(x => x.Id.Equals(request.Id));
+        return mapper.Map<TModel>(results);
     }
 }
