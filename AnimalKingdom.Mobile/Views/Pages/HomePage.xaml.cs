@@ -17,7 +17,8 @@ public partial class HomePage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
 
@@ -33,12 +34,13 @@ public partial class HomePage : ContentPage
                 { 0, 1, new Animation(v => GridLabel.Opacity = v, 0, 1, Easing.CubicIn) }
             };
 
-            fadeInAnimation.Commit(this, "FadeInFromBottom", length: 2000, easing: Easing.Linear);
+            fadeInAnimation.Commit(this, "FadeInFromBottom", length: 1000, easing: Easing.Linear);
+
 
         }
     }
 
-    private async void Update_Layout_Clicked(object sender, EventArgs e)
+    private async Task Update_LayoutAsync(object sender, EventArgs e)
     {
         if (BindingContext is HomeViewModel viewModel)
         {
@@ -57,7 +59,10 @@ public partial class HomePage : ContentPage
                 viewModel.MenuBarSelectionCommand.Execute(e);
             }
         }
-
+    }
+    private async void Update_Layout_Clicked(object sender, EventArgs e)
+    {
+        await Update_LayoutAsync(sender,e);
 
     }
 }

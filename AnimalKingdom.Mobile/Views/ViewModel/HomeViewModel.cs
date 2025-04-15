@@ -11,8 +11,4 @@ public partial class HomeViewModel : BaseViewModel
     {
         GetRandomImage();
     }
-
-
-
-
 }

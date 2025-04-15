@@ -103,6 +103,9 @@
 	  <MauiXaml Update="Views\Controls\AnimalLoadingControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Controls\FlyoutMenuControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Pages\AddAnimalPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

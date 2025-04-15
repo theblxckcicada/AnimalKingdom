@@ -18,6 +18,9 @@
     <MauiXaml Update="Views\Controls\AnimalLoadingControl.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Controls\FlyoutMenuControl.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
     <MauiXaml Update="Views\Pages\AddAnimalPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>

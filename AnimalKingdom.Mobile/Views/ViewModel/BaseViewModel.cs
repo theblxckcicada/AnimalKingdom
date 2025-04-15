@@ -19,14 +19,14 @@ public partial class BaseViewModel : ObservableObject
 
     [ObservableProperty]
     bool isMenuNotVisible =true;
-
+    readonly Random random = new();
     public BaseViewModel()
 	{
 		
 	}
     public void GetRandomImage()
     {
-        RandomImage = $"animal_{(new Random()).Next(6)}.jpg";
+        RandomImage = $"animal_{(random.Next(1,7))}.jpg";
     }
     protected async Task RunBusyAsync(Func<Task> action)
     {
@@ -74,7 +74,7 @@ public partial class BaseViewModel : ObservableObject
     [RelayCommand]
     private async Task NavigateToHomePageAsync()
     {
-        await Shell.Current.GoToAsync($"//{nameof(HomePage)}/{nameof(AnimalListPage)}");
+        await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
     }
     [RelayCommand]
     private async Task NavigateToAddAnimalPageAsync()
