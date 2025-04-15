@@ -29,8 +29,8 @@ namespace AnimalKingdom.Mobile.Repository
 
                 response.EnsureSuccessStatusCode();
 
-                var responseBody = await response.Content.ReadFromJsonAsync<List<Animal>>();
-                return responseBody!;
+                var responseBody = (await response.Content.ReadFromJsonAsync<List<Animal>>() ?? [])!.OrderBy(animal=> animal.Name).ToList();
+                return responseBody;
 
             }
             catch (HttpRequestException e)
@@ -97,6 +97,7 @@ namespace AnimalKingdom.Mobile.Repository
             {
                 Console.WriteLine($"Request error: {e.Message}");
             }
+            AnimalsUpdated?.Invoke();
 
         }
 
@@ -116,7 +117,7 @@ namespace AnimalKingdom.Mobile.Repository
             {
                 Console.WriteLine($"Request error: {e.Message}");
             }
-
+            AnimalsUpdated?.Invoke();
         }
 
         public async Task<List<Animal>> Search(string searchValue)

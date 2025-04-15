@@ -18,7 +18,7 @@ public record QueryEntitiesRequest<TModel, TKey> : IRequest<QueryEntitiesRespons
 
 public record QueryEntitiesResponse<TModel>
 {
-    public IList<TModel> Entities { get; init; } = new List<TModel>();
+    public IList<TModel> Entities { get; init; } = [];
     public int Total { get; init; } = 0;
 }
 
@@ -67,7 +67,7 @@ public class QueryEntitiesHandler<TModel, TKey>(IQueryRepository query, IMapper 
         return new QueryEntitiesResponse<TModel>
         {
             Total = total,
-            Entities = entities.Select(entity => mapper.Map<TModel>(entity)).ToList(),
+            Entities = [.. entities.Select(entity => entity)],
         };
     }
 }

@@ -33,6 +33,23 @@ public class AnimalController(IMediator mediator) : EntityControllerBase<Animal,
         return await base.Add(entity, cancellationToken);
     }
 
+    [HttpPost("bulk")]
+    public override async Task<IActionResult> AddBulkAsync(
+        [FromBody] List<Animal> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        return await base.AddBulkAsync(entities, cancellationToken);
+    }
+
+    [HttpPut("bulk")]
+    public override async Task<IActionResult> UpdateBulkAsync(
+        [FromBody] List<Animal> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        return await base.UpdateBulkAsync(entities, cancellationToken);
+    }
     [HttpPut("{id}")]
     public override async Task<IActionResult> Update(
         Guid id,

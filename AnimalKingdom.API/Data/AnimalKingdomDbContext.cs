@@ -35,4 +35,25 @@ public class AnimalKingdomDbContext(DbContextOptions<AnimalKingdomDbContext> opt
     {
         return this.Set<T>().Update(entity).Entity;
     }
+
+    public List<T> AddMany<T>(List<T> entities)
+        where T : class, IEntityBase
+    {
+        List<T> results = [];
+        foreach (var entity in entities)
+        {
+            results.Add(AddOne(entity));
+        }
+        return results;
+    }
+    public List<T> UpdateMany<T>(List<T> entities)
+        where T : class, IEntityBase
+    {
+        List<T> results = [];
+        foreach (var entity in entities)
+        {
+            results.Add(UpdateOne(entity));
+        }
+        return results;
+    }
 }

@@ -1,5 +1,5 @@
-﻿using AnimalKingdom.Shared.Extensions;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using AnimalKingdom.Shared.Extensions;
 
 namespace AnimalKingdom.API.Models
 {
@@ -8,6 +8,7 @@ namespace AnimalKingdom.API.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
         [JsonConverter(typeof(EnumJsonConverter<AnimalCategory>))]
         public AnimalCategory Category { get; set; }
         public string Image { get; set; }

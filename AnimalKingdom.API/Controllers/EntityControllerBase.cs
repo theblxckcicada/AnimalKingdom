@@ -38,6 +38,55 @@ public abstract class EntityControllerBase<TModel, TKey>(IMediator mediator) : C
         return CreatedAtAction(nameof(Get), new { id = response.Entity.Id }, response.Entity);
     }
 
+    [HttpPost("bulk")]
+    public virtual async Task<IActionResult> AddBulkAsync(
+        [FromBody] List<TModel> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        var response = await mediator.Send(
+            new AddEntityRequest<TModel, TKey> { Entities = entities },
+            cancellationToken
+        );
+
+        response.ValidationResult.AddToModelState(ModelState);
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        if (response.Entities is null)
+        {
+            return Problem();
+        }
+
+        return CreatedAtAction(nameof(Get), response.Entities);
+    }
+    [HttpPost("bulk")]
+    public virtual async Task<IActionResult> UpdateBulkAsync(
+        [FromBody] List<TModel> entities,
+        CancellationToken cancellationToken
+    )
+    {
+        var response = await mediator.Send(
+            new UpdateEntityRequest<TModel, TKey> { Entities = entities },
+            cancellationToken
+        );
+
+        response.ValidationResult.AddToModelState(ModelState);
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        if (response.Entities is null)
+        {
+            return Problem();
+        }
+
+        return CreatedAtAction(nameof(Get), response.Entities);
+    }
+
     [HttpGet]
     public virtual async Task<IActionResult> Get(CancellationToken cancellationToken)
     {

@@ -6,16 +6,15 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                          BackgroundColor="BurlyWood"
              x:DataType="viewmodel:AnimalViewModel"
+             xmlns:model="clr-namespace:AnimalKingdom.Shared.Models;assembly=AnimalKingdom.Shared"
              >
-
-
-    <Grid RowDefinitions="350,50,50,50,100,50" RowSpacing="10" ColumnDefinitions="*">
+    <Grid RowDefinitions="390,50,50,50,100,50" RowSpacing="10" ColumnDefinitions="*">
         <Grid Grid.Row="0">
             <Border
                   StrokeShape="RoundRectangle 250"
                   VerticalOptions="Center"
                   HorizontalOptions="Center"
-                  Margin="-200,-50,50,10"
+                  Margin="-200,0,50,10"
                   WidthRequest="400"
                   HeightRequest="400"
                   Background="DarkBlue"
@@ -40,11 +39,11 @@
                 </HorizontalStackLayout>
             </Border>
             <Border Margin="10,0,10,0" Grid.Row="2">
-                <HorizontalStackLayout    Padding="5" Spacing="10" >
+                <HorizontalStackLayout Padding="5" Spacing="10" >
                     <Label Text="Category" Margin="0,5,0,0" Padding="10,5,5,0" WidthRequest="100"></Label>
                     <Picker 
                             WidthRequest="250" 
-                            SelectedItem="{Binding Category, Mode=TwoWay}" 
+                            SelectedItem="{Binding Category, Mode=OneWayToSource}" 
                             ItemsSource="{Binding CategoryList}">
                         <Picker.ItemDisplayBinding>
                             <Binding />
@@ -76,7 +75,7 @@
 
             <HorizontalStackLayout Grid.Row="5" HorizontalOptions="Center" Spacing="20">
                 <Button Command="{Binding SaveAnimalToListCommand}"   Text="Save" WidthRequest="180" FontSize="16" FontAttributes="Bold" BackgroundColor="DarkBlue" TextColor="SandyBrown"></Button>
-                <Button Command="{Binding NavigateToHomePageCommand}"  Text="Cancel" WidthRequest="180" FontSize="16" BackgroundColor="Red" FontAttributes="Bold"></Button>
+                <Button Command="{Binding NavigateToAnimalListCommand}"  Text="Cancel" WidthRequest="180" FontSize="16" BackgroundColor="Red" FontAttributes="Bold"></Button>
             </HorizontalStackLayout>
         </Grid>
 

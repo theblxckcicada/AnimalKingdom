@@ -36,7 +36,7 @@ public class RemoveEntityHandler<TModel, TKey>(
             return new CommandResponse<TModel>();
         }
 
-        var model = mapper.Map<TModel>(entity);
+        var model = entity;
         var validationResult = await ValidateEntityAsync(model, cancellationToken);
 
         if (!validationResult.IsValid)
@@ -51,7 +51,7 @@ public class RemoveEntityHandler<TModel, TKey>(
         var removed = command.RemoveOne(entity);
         _ = await command.SaveChangesAsync(cancellationToken);
 
-        return new CommandResponse<TModel> { Entity = mapper.Map<TModel>(removed) };
+        return new CommandResponse<TModel> { Entity = removed };
     }
 
     protected virtual Task<ValidationResult> ValidateEntityAsync(
