@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AnimalKingdom.Mobile.Views.Controls.AnimalControl"
+             xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+                         BackgroundColor="BurlyWood"
+             x:DataType="viewmodel:AnimalViewModel"
+             xmlns:model="clr-namespace:AnimalKingdom.Shared.Models;assembly=AnimalKingdom.Shared"
+             >
+    <Grid RowDefinitions="390,50,50,50,100,50" RowSpacing="10" ColumnDefinitions="*">
+        <Grid Grid.Row="0">
+            <Border
+                  StrokeShape="RoundRectangle 250"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  Margin="-200,0,50,10"
+                  WidthRequest="400"
+                  HeightRequest="400"
+                  Background="DarkBlue"
+             
+            >
+                <Image Source="{Binding Image}"
+                     Aspect="AspectFill" 
+                     WidthRequest="400" 
+                     HeightRequest="400"
+                       />
+            </Border>
+        </Grid>
+
+            <Border Margin="10,0,10,0" Grid.Row="1">
+                <HorizontalStackLayout  Padding="5" Spacing="10">
+                    <Label Text="Name" Margin="0,5,0,0" Padding="10,5,5,0" WidthRequest="100"></Label>
+                    <Entry WidthRequest="250" Text="{Binding Name}" >
+                        <Entry.Behaviors>
+                            <toolkit:TextValidationBehavior MinimumLength="1"/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </HorizontalStackLayout>
+            </Border>
+            <Border Margin="10,0,10,0" Grid.Row="2">
+                <HorizontalStackLayout Padding="5" Spacing="10" >
+                    <Label Text="Category" Margin="0,5,0,0" Padding="10,5,5,0" WidthRequest="100"></Label>
+                    <Picker 
+                            WidthRequest="250" 
+                            SelectedItem="{Binding Category, Mode=OneWayToSource}" 
+                            ItemsSource="{Binding CategoryList}">
+                        <Picker.ItemDisplayBinding>
+                            <Binding />
+                        </Picker.ItemDisplayBinding>
+                    </Picker>
+                </HorizontalStackLayout>
+            </Border>
+            <Border Margin="10,0,10,0" Grid.Row="3"  >
+                <HorizontalStackLayout  Padding="5" Spacing="10" >
+                    <Label Text="Description" Margin="0,5,0,0" Padding="10,5,5,0" WidthRequest="100"></Label>
+                    <Entry WidthRequest="250" Text="{Binding Description}">
+                        <Entry.Behaviors>
+                            <toolkit:TextValidationBehavior MinimumLength="1" MaximumLength="300"/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </HorizontalStackLayout>
+            </Border>
+
+            <Border Margin="10,0,10,0" Grid.Row="4"  >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" StrokeThickness="5" StrokeDashArray="20" >
+
+                    </RoundRectangle>
+                </Border.StrokeShape>
+                <HorizontalStackLayout  Padding="5" Spacing="10" HorizontalOptions="Center" HeightRequest="50" >
+                    <Button  Command="{Binding LoadImageCommand}" Text="Select an Image" BackgroundColor="SandyBrown" TextColor="Black"></Button>
+                </HorizontalStackLayout>
+            </Border>
+
+            <HorizontalStackLayout Grid.Row="5" HorizontalOptions="Center" Spacing="20">
+                <Button Command="{Binding SaveAnimalToListCommand}"   Text="Save" WidthRequest="180" FontSize="16" FontAttributes="Bold" BackgroundColor="DarkBlue" TextColor="SandyBrown"></Button>
+                <Button Command="{Binding NavigateToAnimalListCommand}"  Text="Cancel" WidthRequest="180" FontSize="16" BackgroundColor="Red" FontAttributes="Bold"></Button>
+            </HorizontalStackLayout>
+        </Grid>
+
+</ContentView>

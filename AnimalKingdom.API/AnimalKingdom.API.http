@@ -1,0 +1,6 @@
+@AnimalKingdom.API_HostAddress = http://localhost:5008
+
+GET {{AnimalKingdom.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
