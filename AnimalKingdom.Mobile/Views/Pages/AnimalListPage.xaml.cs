@@ -51,4 +51,29 @@ public partial class AnimalListPage : ContentPage
         var collectionView = (CollectionView)sender;
         collectionView.SelectedItem = null;
     }
+    private async Task Update_LayoutAsync(object sender, EventArgs e)
+    {
+        if (BindingContext is AnimalListViewModel viewModel)
+        {
+            var content = (viewModel.IsMenuNotVisible
+                ? GridContent.TranslateTo(250, 150, 800, Easing.Linear)
+                : GridContent.TranslateTo(0, 0, 800, Easing.Linear));
+
+            GridMenu.TranslationX = -300;
+            var menu = (viewModel.IsMenuNotVisible
+               ? GridMenu.TranslateTo(0, 0, 800, Easing.Linear)
+               : GridMenu.TranslateTo(-300, 0, 800, Easing.Linear));
+
+            await Task.WhenAll(content, menu);
+            if (viewModel?.MenuBarSelectionCommand?.CanExecute(e) == true)
+            {
+                viewModel.MenuBarSelectionCommand.Execute(e);
+            }
+        }
+    }
+    private async void Update_Layout_Clicked(object sender, EventArgs e)
+    {
+        await Update_LayoutAsync(sender, e);
+
+    }
 }

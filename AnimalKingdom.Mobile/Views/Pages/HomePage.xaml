@@ -7,38 +7,12 @@
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:HomeViewModel"
              BackgroundImageSource="{Binding RandomImage}"
-                   Shell.NavBarIsVisible="False"
+             xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
+             Shell.NavBarIsVisible="False"
              >
 
     <Grid >
-        <Grid BackgroundColor="Transparent"  HorizontalOptions="Start" x:Name="GridMenu" IsVisible="{Binding IsMenuVisible}">
-            <VerticalStackLayout Spacing="10" WidthRequest="250">
-                <HorizontalStackLayout  HorizontalOptions="End" >
-                    <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  
-                            Text="{x:Static fonts:IconFont.Xmark}" 
-                            Clicked="Update_Layout_Clicked"
-                                FontSize="25" Margin="15,15,-15,15" BackgroundColor="Transparent"
-                            />
-                </HorizontalStackLayout>
-                <VerticalStackLayout Margin="10" Spacing="10" >
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
-                            Text="Home" Padding="10" FontSize="18" FontAttributes="Bold" TextColor="DarkBlue" 
-                            Command="{Binding NavigateToHomePageCommand}"
-                             Clicked="Update_Layout_Clicked"/>
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
-                            Text="Explore Wildlife" Padding="10" FontSize="18" 
-                            FontAttributes="Bold" TextColor="DarkBlue"
-                            Command="{Binding NavigateToAnimalListCommand}"
-                             Clicked="Update_Layout_Clicked"/>
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10"
-                            Text="Log Wildlife" Padding="10" FontSize="18" 
-                            FontAttributes="Bold" TextColor="DarkBlue"
-                            Command="{Binding NavigateToAddAnimalPageCommand}"
-                             Clicked="Update_Layout_Clicked"
-                            />
-                </VerticalStackLayout>
-            </VerticalStackLayout>
-        </Grid>
+        <controls:FlyoutMenuControl x:Name="GridMenu" FlyoutMenuClick="Update_Layout_Clicked"/>
         <Grid RowDefinitions="*,500" x:Name="GridContent">
             <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
                 <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  Text="{x:Static fonts:IconFont.BarsStaggered}" IsVisible="{Binding IsMenuNotVisible}"

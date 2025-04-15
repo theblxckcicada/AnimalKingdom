@@ -7,16 +7,27 @@
                          BackgroundColor="BurlyWood"
              x:DataType="viewmodel:AnimalViewModel"
              >
-    <VerticalStackLayout>
 
-        <Grid RowDefinitions="*,50,50,50,100,50" RowSpacing="10" ColumnDefinitions="*">
-            <Border Margin="10,-50,10,10" Grid.Row="0" HeightRequest="350" WidthRequest="350" HorizontalOptions="Center" TranslationX="-150" BackgroundColor="SandyBrown">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="250"></RoundRectangle>
-                </Border.StrokeShape>
-                <Image Source="{Binding Image}" Aspect="AspectFill">
-                </Image>
+
+    <Grid RowDefinitions="350,50,50,50,100,50" RowSpacing="10" ColumnDefinitions="*">
+        <Grid Grid.Row="0">
+            <Border
+                  StrokeShape="RoundRectangle 250"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  Margin="-200,-50,50,10"
+                  WidthRequest="400"
+                  HeightRequest="400"
+                  Background="DarkBlue"
+             
+            >
+                <Image Source="{Binding Image}"
+                     Aspect="AspectFill" 
+                     WidthRequest="400" 
+                     HeightRequest="400"
+                       />
             </Border>
+        </Grid>
 
             <Border Margin="10,0,10,0" Grid.Row="1">
                 <HorizontalStackLayout  Padding="5" Spacing="10">
@@ -64,9 +75,9 @@
             </Border>
 
             <HorizontalStackLayout Grid.Row="5" HorizontalOptions="Center" Spacing="20">
-                <Button Command="{Binding SaveAnimalToListCommand}"   Text="Save" WidthRequest="180" FontSize="16" FontAttributes="Bold" TextColor="SandyBrown"></Button>
+                <Button Command="{Binding SaveAnimalToListCommand}"   Text="Save" WidthRequest="180" FontSize="16" FontAttributes="Bold" BackgroundColor="DarkBlue" TextColor="SandyBrown"></Button>
                 <Button Command="{Binding NavigateToHomePageCommand}"  Text="Cancel" WidthRequest="180" FontSize="16" BackgroundColor="Red" FontAttributes="Bold"></Button>
             </HorizontalStackLayout>
         </Grid>
-    </VerticalStackLayout>
+
 </ContentView>

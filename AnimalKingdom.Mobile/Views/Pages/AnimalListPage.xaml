@@ -6,83 +6,90 @@
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:AnimalListViewModel"
              xmlns:controls="clr-namespace:AnimalKingdom.Mobile.Views.Controls"
-           
-BackgroundImageSource="{Binding RandomImage}"
+             Shell.NavBarIsVisible="False"
+             xmlns:fonts="clr-namespace:Fonts"
+             BackgroundImageSource="{Binding RandomImage}"
              Title="Animal Kingdom">
 
-    <Grid RowDefinitions="50,*,80" ColumnDefinitions="*" IgnoreSafeArea="True">
-        <HorizontalStackLayout 
-            Grid.Row="0"   
+    <Grid >
+        <controls:FlyoutMenuControl x:Name="GridMenu" FlyoutMenuClick="Update_Layout_Clicked"/>
+        <Grid RowDefinitions="50,50,*,80" ColumnDefinitions="*" x:Name="GridContent">
+            <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
+                <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  Text="{x:Static fonts:IconFont.BarsStaggered}" IsVisible="{Binding IsMenuNotVisible}"
+                        Clicked="Update_Layout_Clicked"
+                    FontSize="25" Margin="15" BackgroundColor="Transparent" />
+            </Grid>
+            <HorizontalStackLayout 
+            Grid.Row="1"   
             VerticalOptions="Center"  
             HeightRequest="50"  
             Margin="0,0,20,10"
                            >
-            <SearchBar  
+                <SearchBar  
                         IsEnabled="{Binding IsNotBusy}"
                         IsReadOnly="{Binding IsBusy}"
-             
-        
-                BackgroundColor="NavajoWhite"
+                        BackgroundColor="Transparent"
+                        PlaceholderColor="White"
                         Placeholder="E.g Leopard"
                         x:Name="AnimalSearchBar"
                         TextChanged="AnimalSearchBar_TextChanged"
                   
                      />
-        </HorizontalStackLayout>
+            </HorizontalStackLayout>
 
-        <CollectionView Margin="0,20,0,0" 
+            <CollectionView Margin="0,20,0,0" 
                         ItemsSource="{Binding AnimalCollection}" 
                         SelectionChangedCommand="{Binding AnimalSelectionChangedCommand}" 
                    SelectionChanged="CollectionView_SelectionChanged"
                          SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
-                        Grid.Row="1" SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Animal">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems Mode="Reveal">
-                                <SwipeItem Text="Delete" BackgroundColor="Red"
+                        Grid.Row="2" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Animal">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem Text="Delete" BackgroundColor="Red"
                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AnimalListViewModel}}, Path=DeleteAnimalCommand}"
                                              CommandParameter="{Binding .}"/>
-                                <SwipeItem Text="Edit" 
+                                    <SwipeItem Text="Edit" 
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AnimalListViewModel}}, Path=AnimalSelectionChangedCommand}"
                                             CommandParameter="{Binding .}"/>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
 
-                        <Border HeightRequest="90" Margin="15,5,15,5" BackgroundColor="NavajoWhite" >
+                            <Border HeightRequest="90" Margin="15,5,15,5" BackgroundColor="NavajoWhite" >
 
 
-                            <Grid RowDefinitions="*" ColumnDefinitions="*,120">
+                                <Grid RowDefinitions="*" ColumnDefinitions="*,120">
 
-                                <VerticalStackLayout Padding="20" Grid.Column="0">
-                                    <Label  Text="{Binding Category}" FontSize="14"/>
-                                    <Label Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
-                                </VerticalStackLayout>
-                                <Border Grid.Column="1" HeightRequest="100">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="20" />
-                                    </Border.StrokeShape>
-                                    <Image Source="{Binding Image}"  Aspect="AspectFill"/>
-                                </Border>
-                            </Grid>
+                                    <VerticalStackLayout Padding="20" Grid.Column="0">
+                                        <Label  Text="{Binding Category}" FontSize="14"/>
+                                        <Label Text="{Binding Name}" TextColor="DarkBlue" FontSize="24"/>
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="1" HeightRequest="100">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="20" />
+                                        </Border.StrokeShape>
+                                        <Image Source="{Binding Image}"  Aspect="AspectFill"/>
+                                    </Border>
+                                </Grid>
 
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10"/>
-                            </Border.StrokeShape>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
 
-                        </Border>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-        <controls:AnimalLoadingControl />
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <controls:AnimalLoadingControl />
 
-        <Button Text="Add" WidthRequest="250" Grid.Row="2" HeightRequest="50" 
+            <Button Text="Log Wildlife" WidthRequest="250" Grid.Row="3" HeightRequest="50" 
                         TextColor="SandyBrown" FontAttributes="Bold" 
                         BackgroundColor="DarkBlue" Command="{Binding NavigateToAddAnimalPageCommand}"/>
 
+        </Grid>
     </Grid>
-
 
 </ContentPage>
