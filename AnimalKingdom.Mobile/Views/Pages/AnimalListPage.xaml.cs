@@ -6,6 +6,7 @@ public partial class AnimalListPage : ContentPage
 {
     private readonly AnimalListViewModel _viewModel;
     private CancellationTokenSource _debounceCts;
+    private string searchText;
     public AnimalListPage(AnimalListViewModel viewModel)
     {
          InitializeComponent();
@@ -21,6 +22,11 @@ public partial class AnimalListPage : ContentPage
         if (BindingContext is AnimalListViewModel viewModel)
         {
             viewModel.GetRandomImage();
+
+        }
+        if (_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(searchText) == true)
+        {
+            _viewModel.AnimalSearchTextChangedCommand.Execute(searchText);
         }
     }
 
@@ -37,6 +43,7 @@ public partial class AnimalListPage : ContentPage
             if (_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
             {
                 _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
+                this.searchText = e.NewTextValue;
             }
         }
         catch (TaskCanceledException)
