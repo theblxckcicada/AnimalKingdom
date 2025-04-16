@@ -19,5 +19,6 @@ namespace AnimalKingdom.API.Models
         Herbivore,
         Carnivore,
         Omnivore,
+        Insectivore
     }
 }
