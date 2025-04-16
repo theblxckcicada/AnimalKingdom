@@ -11,7 +11,7 @@
              Shell.NavBarIsVisible="False"
              >
 
-    <Grid >
+    <Grid x:Name="HomeGrid">
         <controls:FlyoutMenuControl x:Name="GridMenu" FlyoutMenuClick="Update_Layout_Clicked"/>
         <Grid RowDefinitions="*,500" x:Name="GridContent">
             <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
@@ -28,7 +28,7 @@
                         <Label Text="Wonders of the Wild" Padding="10" HorizontalOptions="Center" FontSize="28" FontAttributes="Bold" TextColor="DarkBlue"/>
                         <Label Text="Discover the Wild Like Never Before." TextColor="white" FontSize="16" FontAttributes="Bold" />
                     </VerticalStackLayout>
-                    <Button CornerRadius="50" Text="Explore" WidthRequest="300" HeightRequest="35" Command="{Binding NavigateToAnimalListCommand}" BackgroundColor="DarkBlue" TextColor="SandyBrown" FontAttributes="Bold"></Button>
+                    <Button CornerRadius="50" Clicked="Explore_Navigation_Clicked" Text="Explore" WidthRequest="300" HeightRequest="35" Command="{Binding NavigateToAnimalListCommand}" BackgroundColor="DarkBlue" TextColor="SandyBrown" FontAttributes="Bold"></Button>
                 </VerticalStackLayout>
 
             </Grid>

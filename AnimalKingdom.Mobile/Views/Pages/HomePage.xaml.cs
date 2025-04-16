@@ -35,7 +35,7 @@ public partial class HomePage : ContentPage
             };
 
             fadeInAnimation.Commit(this, "FadeInFromBottom", length: 1000, easing: Easing.Linear);
-
+            HomeGrid.TranslationX = 0;
 
         }
     }
@@ -44,14 +44,12 @@ public partial class HomePage : ContentPage
     {
         if (BindingContext is HomeViewModel viewModel)
         {
-            var content = (viewModel.IsMenuNotVisible
-                ? GridContent.TranslateTo(250, 0, 800, Easing.Linear)
-                : GridContent.TranslateTo(0, 0, 800, Easing.Linear));
+            var content = (viewModel.IsMenuVisible ? GridContent.TranslateTo(0, 0, 800, Easing.Linear) : GridContent.TranslateTo(250, 0, 800, Easing.Linear));
 
-            GridMenu.TranslationX = -300;
-            var menu = (viewModel.IsMenuNotVisible
-               ? GridMenu.TranslateTo(0, 0, 800, Easing.Linear)
-               : GridMenu.TranslateTo(-300, 0, 800, Easing.Linear));
+
+            var menu = (viewModel.IsMenuVisible
+               ? GridMenu.TranslateTo(-300, 0, 800, Easing.Linear) : GridMenu.TranslateTo(0, 0, 800, Easing.Linear)
+               );
 
             await Task.WhenAll(content, menu);
             if (viewModel?.MenuBarSelectionCommand?.CanExecute(e) == true)
@@ -62,7 +60,13 @@ public partial class HomePage : ContentPage
     }
     private async void Update_Layout_Clicked(object sender, EventArgs e)
     {
-        await Update_LayoutAsync(sender,e);
+        await Update_LayoutAsync(sender, e);
+
+    }
+
+    private async void Explore_Navigation_Clicked(object sender, EventArgs e)
+    {
+            await HomeGrid.TranslateTo(-250, 0, 800, Easing.Linear);
 
     }
 }
