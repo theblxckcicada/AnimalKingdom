@@ -18,5 +18,7 @@ namespace AnimalKingdom.Shared.Models
         Herbivore,
         Carnivore,
         Omnivore,
+        Insectivore
+
     }
 }
