@@ -14,13 +14,14 @@ public partial class AnimalListViewModel : BaseViewModel
 
     private ObservableCollection<Animal> animalCollection = [];
 
+
     private AnimalRepository animalRepository;
     public AnimalListViewModel(AnimalRepository animalRepository)
     {
         this.animalRepository = animalRepository;
         animalRepository.AnimalsUpdated += OnAnimalsUpdated;
 
-        LoadAnimals();
+        _ = LoadAnimals();
     }
 
 
@@ -28,6 +29,7 @@ public partial class AnimalListViewModel : BaseViewModel
     {
         return RunBusyAsync(async () =>
         {
+         
             var animals = string.IsNullOrEmpty(searchText)
                 ? await animalRepository.GetAnimals()
                 : await animalRepository.Search(searchText);

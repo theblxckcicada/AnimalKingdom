@@ -11,7 +11,7 @@
              Shell.NavBarIsVisible="False"
              >
 
-    <Grid >
+    <Grid x:Name="HomeGrid">
         <controls:FlyoutMenuControl x:Name="GridMenu" FlyoutMenuClick="Update_Layout_Clicked"/>
         <Grid RowDefinitions="*,500" x:Name="GridContent">
             <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
@@ -33,6 +33,7 @@
 
             </Grid>
         </Grid>
+        <controls:AnimalLoadingControl />
     </Grid>
 
 </ContentPage>

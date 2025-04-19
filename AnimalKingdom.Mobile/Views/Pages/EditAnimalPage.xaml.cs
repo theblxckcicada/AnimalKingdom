@@ -4,10 +4,16 @@ namespace AnimalKingdom.Mobile.Views.Pages;
 
 public partial class EditAnimalPage : ContentPage
 {
-
-    public EditAnimalPage(AnimalViewModel viewModel)
+    private readonly AnimalViewModel viewModel;
+    public EditAnimalPage(AnimalViewModel _viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        viewModel = _viewModel;
+        BindingContext = _viewModel;
+    }
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await viewModel.CheckAccountStatusAsync();
     }
 }

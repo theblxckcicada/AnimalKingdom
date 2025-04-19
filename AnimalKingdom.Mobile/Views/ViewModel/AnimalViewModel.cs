@@ -108,7 +108,7 @@ public partial class AnimalViewModel : BaseViewModel
 
             using var stream = await result.OpenReadAsync();
             // set the image to the field
-            Image = await ConvertImageToBase64String(stream);
+            Image = await BaseViewModel.ConvertImageToBase64String(stream);
 
         }
     }
@@ -125,7 +125,7 @@ public partial class AnimalViewModel : BaseViewModel
                 Animal.Name = Name;
                 Animal.Description = Description;
                 Animal.Category = Category;
-                Animal.Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
+                Animal.Image = Image ?? await BaseViewModel.ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
 
                 await animalRepository.UpdateAnimal(Animal);
             }
@@ -136,7 +136,7 @@ public partial class AnimalViewModel : BaseViewModel
                 {
                     Id = Guid.NewGuid(),
                     Name = Name,
-                    Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg")),
+                    Image = Image ?? await BaseViewModel.ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg")),
                     Description = Description,
                     Category = Category,
                 };
