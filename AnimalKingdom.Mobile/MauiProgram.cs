@@ -36,8 +36,6 @@ public static class MauiProgram
         builder.Services.AddTransient<AnimalViewModel>();
 		builder.Services.AddTransient<AnimalControl>();
 		
-
-
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
