@@ -1,5 +1,6 @@
 ﻿
 using AnimalKingdom.Mobile.Views.Pages;
+using AnimalKingdom.Mobile.Views.ViewModel;
 
 namespace AnimalKingdom.Mobile;
 
@@ -16,4 +17,14 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(AnimalListPage),typeof(AnimalListPage));
 		Routing.RegisterRoute(nameof(AnimalItemPage),typeof(AnimalItemPage));
 	}
+    //protected override async void OnNavigated(ShellNavigatedEventArgs args)
+    //{
+    //    base.OnNavigated(args);
+
+    //    if (CurrentItem?.CurrentItem?.BindingContext is BaseViewModel viewModel)
+    //    {
+    //        _ = viewModel.CheckAccountStatusAsync();
+    //    }
+    //}
+
 }

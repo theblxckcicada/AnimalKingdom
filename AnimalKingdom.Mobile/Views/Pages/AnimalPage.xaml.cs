@@ -4,14 +4,19 @@ namespace AnimalKingdom.Mobile.Views.Pages;
 
 public partial class AnimalItemPage : ContentPage
 {
-    private readonly AnimalViewModel _viewModel;
-    public AnimalItemPage(AnimalViewModel viewModel)
+    private readonly AnimalViewModel viewModel;
+    public AnimalItemPage(AnimalViewModel _viewModel)
     {
         InitializeComponent();
      
-        _viewModel = viewModel;
+        viewModel = _viewModel;
         BindingContext = _viewModel;
+        _ = viewModel.CheckAccountStatusAsync();
+    }
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await viewModel.CheckAccountStatusAsync();
     }
 
-
-}
+    }

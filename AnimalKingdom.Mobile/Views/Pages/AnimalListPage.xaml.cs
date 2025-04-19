@@ -1,32 +1,55 @@
 using AnimalKingdom.Mobile.Views.ViewModel;
+using Microsoft.Maui.Controls;
 
 namespace AnimalKingdom.Mobile.Views.Pages;
 
 public partial class AnimalListPage : ContentPage
 {
-    private readonly AnimalListViewModel _viewModel;
+    private readonly AnimalListViewModel viewModel;
     private CancellationTokenSource _debounceCts;
     private string searchText;
-    public AnimalListPage(AnimalListViewModel viewModel)
+    public AnimalListPage(AnimalListViewModel _viewModel)
     {
          InitializeComponent();
-        _viewModel = viewModel;
+        viewModel = _viewModel;
         BindingContext = _viewModel;
+       
     }
 
 
-    protected override void OnAppearing()
+    protected async  override void OnAppearing()
     {
-        base.OnAppearing();
-
-        if (BindingContext is AnimalListViewModel viewModel)
-        {
+            base.OnAppearing();
+            await viewModel.CheckAccountStatusAsync();
             viewModel.GetRandomImage();
+            // update the collection view and RowDefinitions for admin and visitors
 
-        }
-        if (_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(searchText) == true)
+            AnimalCollectionView.SelectionMode = viewModel.LoggedIn ? SelectionMode.None: SelectionMode.Single;
+            if (viewModel.LoggedIn)
+            {
+                GridContent.RowDefinitions =
+                    [
+                        new RowDefinition { Height = new GridLength(50) },
+                        new RowDefinition { Height = new GridLength(50) },
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) },
+                        new RowDefinition { Height = new GridLength(80) }
+                    ];
+            }
+            else
+            {
+                GridContent.RowDefinitions =
+                    [
+                        new RowDefinition { Height = new GridLength(50) },
+                        new RowDefinition { Height = new GridLength(50) },
+                        new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
+               
+                    ];
+            }
+
+        
+        if (viewModel?.AnimalSearchTextChangedCommand?.CanExecute(searchText) == true)
         {
-            _viewModel.AnimalSearchTextChangedCommand.Execute(searchText);
+            viewModel.AnimalSearchTextChangedCommand.Execute(searchText);
         }
     }
 
@@ -40,9 +63,9 @@ public partial class AnimalListPage : ContentPage
         {
             await Task.Delay(300, token); // Wait 300ms, or cancel if new input comes in
 
-            if (_viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
+            if (viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
             {
-                _viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
+                viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
                 this.searchText = e.NewTextValue;
             }
         }
@@ -60,8 +83,7 @@ public partial class AnimalListPage : ContentPage
     }
     private async Task Update_LayoutAsync(object sender, EventArgs e)
     {
-        if (BindingContext is AnimalListViewModel viewModel)
-        {
+
             var content = (viewModel.IsMenuNotVisible
                 ? GridContent.TranslateTo(250, 150, 800, Easing.Linear)
                 : GridContent.TranslateTo(0, 0, 800, Easing.Linear));
@@ -76,7 +98,7 @@ public partial class AnimalListPage : ContentPage
             {
                 viewModel.MenuBarSelectionCommand.Execute(e);
             }
-        }
+        
     }
     private async void Update_Layout_Clicked(object sender, EventArgs e)
     {

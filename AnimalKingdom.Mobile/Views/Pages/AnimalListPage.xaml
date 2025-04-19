@@ -13,7 +13,7 @@
 
     <Grid >
         <controls:FlyoutMenuControl x:Name="GridMenu" FlyoutMenuClick="Update_Layout_Clicked"/>
-        <Grid RowDefinitions="50,50,*,80" ColumnDefinitions="*" x:Name="GridContent">
+        <Grid  ColumnDefinitions="*" x:Name="GridContent">
             <Grid Grid.Row="0" HorizontalOptions="Start" VerticalOptions="Start" >
                 <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  Text="{x:Static fonts:IconFont.BarsStaggered}" IsVisible="{Binding IsMenuNotVisible}"
                         Clicked="Update_Layout_Clicked"
@@ -33,11 +33,12 @@
                         Placeholder="E.g Leopard"
                         x:Name="AnimalSearchBar"
                         TextChanged="AnimalSearchBar_TextChanged"
+                    
                   
                      />
             </HorizontalStackLayout>
 
-            <CollectionView Margin="0,20,0,0" 
+            <CollectionView x:Name="AnimalCollectionView"  Margin="0,20,0,0" 
                         ItemsSource="{Binding AnimalCollection}" 
                         SelectionChangedCommand="{Binding AnimalSelectionChangedCommand}" 
                    SelectionChanged="CollectionView_SelectionChanged"
@@ -45,7 +46,7 @@
                         Grid.Row="2" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Animal">
-                        <SwipeView>
+                        <SwipeView IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AnimalListViewModel}}, Path=LoggedIn}">
                             <SwipeView.RightItems>
                                 <SwipeItems Mode="Reveal">
                                     <SwipeItem Text="Delete" BackgroundColor="Red"
@@ -83,13 +84,16 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <controls:AnimalLoadingControl />
+    
 
-            <Button Text="Log Wildlife" WidthRequest="250" Grid.Row="3" HeightRequest="50" 
+            <Button x:Name="BtnLogWildlife" Text="Log Wildlife" WidthRequest="250" Grid.Row="3" HeightRequest="50" 
+                        IsVisible="{Binding LoggedIn}"
                         TextColor="SandyBrown" FontAttributes="Bold" 
+                        IsEnabled="{Binding IsNotBusy}"
                         BackgroundColor="DarkBlue" Command="{Binding NavigateToAddAnimalPageCommand}"/>
 
         </Grid>
+        <controls:AnimalLoadingControl />
     </Grid>
 
 </ContentPage>
