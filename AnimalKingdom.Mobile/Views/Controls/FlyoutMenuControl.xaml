@@ -6,32 +6,54 @@
              xmlns:fonts="clr-namespace:Fonts"
              x:DataType="viewmodel:BaseViewModel">
 
-        <Grid BackgroundColor="Transparent"  HorizontalOptions="Start" IsVisible="{Binding IsMenuVisible}">
-            <VerticalStackLayout Spacing="10" WidthRequest="250">
-                <HorizontalStackLayout  HorizontalOptions="End" >
-                    <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  
+    <Grid BackgroundColor="Transparent"  HorizontalOptions="Start" IsVisible="{Binding IsMenuVisible}">
+        <VerticalStackLayout Spacing="10" WidthRequest="250">
+            <HorizontalStackLayout  HorizontalOptions="End" >
+                <Button WidthRequest="60" HeightRequest="60"  FontFamily="FreeSolid"  
                             Text="{x:Static fonts:IconFont.Xmark}" 
+                        IsEnabled="{Binding IsNotBusy}"
                             Clicked="Update_Layout_Clicked"
                                 FontSize="25" Margin="15,15,-15,15" BackgroundColor="Transparent"
                             />
-                </HorizontalStackLayout>
-                <VerticalStackLayout Margin="10" Spacing="10" >
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
+            </HorizontalStackLayout>
+            <VerticalStackLayout Margin="10" Spacing="10" >
+                <Button BackgroundColor="BurlyWood" CornerRadius="10" 
                             Text="Home" Padding="10" FontSize="18" FontAttributes="Bold" TextColor="DarkBlue" 
                             Command="{Binding NavigateToHomePageCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
                              Clicked="Update_Layout_Clicked"/>
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10" 
+                <Button BackgroundColor="BurlyWood" CornerRadius="10" 
                             Text="Explore Wildlife" Padding="10" FontSize="18" 
                             FontAttributes="Bold" TextColor="DarkBlue"
                             Command="{Binding NavigateToAnimalListCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
                              Clicked="Update_Layout_Clicked"/>
-                    <Button BackgroundColor="BurlyWood" CornerRadius="10"
+                <Button BackgroundColor="BurlyWood" CornerRadius="10"
                             Text="Log Wildlife" Padding="10" FontSize="18" 
                             FontAttributes="Bold" TextColor="DarkBlue"
                             Command="{Binding NavigateToAddAnimalPageCommand}"
+                            IsVisible="{Binding LoggedIn}"
+                                IsEnabled="{Binding IsNotBusy}"
                              Clicked="Update_Layout_Clicked"
                             />
-                </VerticalStackLayout>
+                <Button BackgroundColor="BurlyWood" CornerRadius="10"
+                       IsVisible="{Binding NotLoggedIn}"
+                       Text="Admin Login" Padding="10" FontSize="18" 
+                       FontAttributes="Bold" TextColor="DarkBlue"
+                       Command="{Binding AdminLoginCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
+                          Clicked="Update_Layout_Clicked"
+                       />
+
+                <Button BackgroundColor="BurlyWood" CornerRadius="10"
+                        IsVisible="{Binding LoggedIn}"
+                        Text="Admin Signout" Padding="10" FontSize="18" 
+                        FontAttributes="Bold" TextColor="DarkBlue"
+                        Command="{Binding AdminLogoutCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
+                        Clicked="Update_Layout_Clicked"
+            />
             </VerticalStackLayout>
-        </Grid>
+        </VerticalStackLayout>
+    </Grid>
 </ContentView>

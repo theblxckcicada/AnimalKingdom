@@ -9,5 +9,8 @@
                Shell.NavBarIsVisible="False"
              Title="{Binding PageTitle}">
 
-    <controls:AnimalControl  />
+    <Grid>
+        <controls:AnimalControl  />
+        <controls:AnimalLoadingControl />
+    </Grid>
 </ContentPage>

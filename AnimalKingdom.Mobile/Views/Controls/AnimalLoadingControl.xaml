@@ -4,18 +4,51 @@
              x:Class="AnimalKingdom.Mobile.Views.Controls.AnimalLoadingControl"
              xmlns:viewmodel="clr-namespace:AnimalKingdom.Mobile.Views.ViewModel"
              x:DataType="viewmodel:BaseViewModel"
-
+            
              >
-    <VerticalStackLayout VerticalOptions="Center">
-        <ActivityIndicator 
-            Grid.Row="1"
-            IsRunning="{Binding IsBusy}" 
-            IsVisible="{Binding IsBusy}" 
-            HorizontalOptions="Center" 
-            HeightRequest="100"
-            WidthRequest="100"
-            VerticalOptions="Center"
-            ZIndex="1"
-/>
-    </VerticalStackLayout>
+
+
+    <AbsoluteLayout  ZIndex="10" IsVisible="{Binding IsBusy}" IsEnabled="{Binding IsBusy}">
+        <!-- Main Spinner -->
+        <Grid AbsoluteLayout.LayoutFlags="All"
+              AbsoluteLayout.LayoutBounds="0.5,0.5,120,120"
+              x:Name="MainSpinner">
+
+            <!-- Gradient Border -->
+            <Border WidthRequest="120"
+                     HeightRequest="120"
+                   >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="60"/>
+                </Border.StrokeShape>
+                <Border.Stroke>
+                    <LinearGradientBrush StartPoint="0,0"
+                                         EndPoint="1,1">
+                        <GradientStop Color="SandyBrown" Offset="0.33"/>
+                        <GradientStop Color="Transparent" Offset="0.33"/>
+                        <GradientStop Color="Transparent" Offset="0.66"/>
+                        <GradientStop Color="DarkBlue" Offset="0.66"/>
+                    </LinearGradientBrush>
+                </Border.Stroke>
+                <Border.StrokeThickness>8</Border.StrokeThickness>
+            </Border>
+
+
+
+            <!-- Central Core -->
+            <Border WidthRequest="40"
+                   HeightRequest="40"
+                   Padding="0"
+                   BackgroundColor="Transparent"
+            >
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
+                <Label Text="🌍" FontSize="25" 
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       x:Name="Core"/>
+            </Border>
+        </Grid>
+    </AbsoluteLayout>
 </ContentView>
