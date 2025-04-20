@@ -7,14 +7,21 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
 {
     public AnimalKingdomDbContext CreateDbContext(string[] args)
     {
-        // Load environment variables
-        var config = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+        // Determine if we're in development
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
-        var connectionString = config.GetSection("ConnectionStrings")["AnimalKingdom"];
+        var config = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true) // base config
+            .AddJsonFile($"appsettings.{env}.json", optional: true) // environment-specific (e.g. appsettings.Development.json)
+            .AddEnvironmentVariables() // this will map ConnectionStrings__AnimalKingdom, etc.
+            .Build();
+
+        var connectionString = config.GetConnectionString("AnimalKingdom");
 
         if (string.IsNullOrWhiteSpace(connectionString))
             throw new InvalidOperationException(
-                "ConnectionStrings:AnimalKingdom is not set in the environment variables."
+                "Connection string 'AnimalKingdom' is not configured."
             );
 
         var optionsBuilder = new DbContextOptionsBuilder<AnimalKingdomDbContext>();
