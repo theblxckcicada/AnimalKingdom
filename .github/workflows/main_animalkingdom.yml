@@ -53,12 +53,15 @@ jobs:
         env:
           ConnectionStrings__AnimalKingdom: ${{ secrets.OVAWATCH_DB_CONNECTION }}
 
+
       - name: Apply EF Core Migrations
+        shell: bash
+        env:
+            ASPNETCORE_ENVIRONMENT: Production
+            ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
         run: |
-            ConnectionStrings__AnimalKingdom="${{ secrets.OVAWATCH_DB_CONNECTION }}" \
-            ASPNETCORE_ENVIRONMENT="Production" \
-            dotnet ef database update
-        working-directory: AnimalKingdom.API
+            echo "Applying EF Core migrations..."
+            dotnet ef database update --project AnimalKingdom.API --startup-project AnimalKingdom.API
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
