@@ -12,7 +12,7 @@ export class DataStorageService {
     const animals: Animal[] = this.animalService.getAllAnimals();
     this.http
       .put(
-        'https://ng-animal-project-default-rtdb.firebaseio.com/animals.json',
+        'https://ng-animal-kingdom-default-rtdb.firebaseio.com/animals.json',
         animals
       )
       .subscribe((animals) => {});
@@ -20,7 +20,9 @@ export class DataStorageService {
 
   fetchAnimalsData() {
     return this.http
-      .get<Animal[]>('https://ng-animal-project-default-rtdb.firebaseio.com/animals.json',)
+      .get<Animal[]>(
+        'https://ng-animal-kingdom-default-rtdb.firebaseio.com/animals.json'
+      )
       .pipe(
         tap((animals) => {
           //   animals.sort(() => (Math.random() > 0.5 ? 1 : -1));

@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalKingdom.API", "Animal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimalKingdom.Shared", "AnimalKingdom.Shared\AnimalKingdom.Shared.csproj", "{2B6B813D-D3E5-4E23-9965-7B7EF650A4E2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{70CD6B31-A5DE-4145-8B32-4DC88107BC39}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.Md = ReadMe.Md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

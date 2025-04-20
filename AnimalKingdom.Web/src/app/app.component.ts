@@ -6,8 +6,8 @@ import { AuthService } from './auth/auth-service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
-  title = 'animal-project';
+export class AppComponent implements OnInit {
+  title = 'animal-kingdom';
 
   constructor(private authService: AuthService) {}
 

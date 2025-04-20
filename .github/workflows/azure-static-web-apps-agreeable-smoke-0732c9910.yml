@@ -1,13 +1,18 @@
-name: Azure Static Web Apps CI/CD
+name: Animal Kingdom Azure Static Web Apps CI/CD
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'AnimalKingdom.Web/**'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    paths:
+      - 'AnimalKingdom.Web/**'
+
 
 jobs:
   build_and_deploy_job:
@@ -30,5 +35,5 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/angular" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist/animal-project" # Built app content directory - optional
+          output_location: "dist/animal-kingdom" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######

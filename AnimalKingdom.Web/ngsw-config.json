@@ -27,11 +27,11 @@
       }
     }
   ],
-  "dataGroups":[
+  "dataGroups": [
     {
-      "name":"animals",
+      "name": "animals",
       "urls": [
-        "https://ng-animal-project-default-rtdb.firebaseio.com/animals.json"
+        "https://ng-animal-kingdom-default-rtdb.firebaseio.com/animals.json"
       ],
       "cacheConfig": {
         "maxAge": "6h",
