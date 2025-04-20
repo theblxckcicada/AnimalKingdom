@@ -7,17 +7,33 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
 {
     public AnimalKingdomDbContext CreateDbContext(string[] args)
     {
-        var environment =
-            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+        string? connectionString = null;
 
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true)
-            .AddJsonFile($"appsettings.{environment}.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
+        // Check for --connection argument
+        for (int i = 0; i < args.Length - 1; i++)
+        {
+            if (args[i] == "--connection")
+            {
+                connectionString = args[i + 1];
+                break;
+            }
+        }
 
-        var connectionString = config.GetConnectionString("AnimalKingdom");
+        // If not passed via args, load from config
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            var environment =
+                Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+
+            connectionString = config.GetConnectionString("AnimalKingdom");
+        }
 
         if (string.IsNullOrWhiteSpace(connectionString))
             throw new InvalidOperationException(
