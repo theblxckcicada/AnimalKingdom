@@ -60,7 +60,7 @@ public partial class AnimalListPage : ContentPage
 
         try
         {
-            await Task.Delay(300, token); // Wait 300ms, or cancel if new input comes in
+            await Task.Delay(500, token); // Wait 300ms, or cancel if new input comes in
 
             if (viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
             {

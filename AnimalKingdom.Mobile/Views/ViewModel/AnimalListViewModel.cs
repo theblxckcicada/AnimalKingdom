@@ -65,16 +65,15 @@ public partial class AnimalListViewModel : BaseViewModel
     private async Task DeleteAnimalAsync(Animal animal)
     {
         await AquireAccessTokenAsync(animalService);
-        await RunBusyAsync(async () =>
+        if (animal is not null)
         {
-            if (animal is not null)
+            bool confirm = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {animal.Name}?", "Yes", "No");
+            if (confirm)
             {
-                bool confirm = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {animal.Name}?", "Yes", "No");
-                if (confirm)
-                {
-                    await animalService.DeleteAnimal(animal.Id);
-                }
+                await RunBusyAsync(() => animalService.DeleteAnimal(animal.Id));
             }
-        });
+            await LoadAnimals();
+            await Shell.Current.GoToAsync($"//{nameof(HomePage)}/{nameof(AnimalListPage)}");
+    }
     }
 }
