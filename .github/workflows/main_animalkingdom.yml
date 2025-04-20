@@ -41,7 +41,7 @@ jobs:
         run: dotnet tool install --global dotnet-ef
 
       - name: Run EF Core Migrations
-        run: dotnet ef database update --project AnimalKingdom.API --startup-project AnimalKingdom.API
+        run: dotnet ef database update 
         working-directory: AnimalKingdom.API  # Ensure correct directory for appsettings
         env:
           ConnectionStrings__AnimalKingdom: ${{ secrets.PRODUCTION_DB_CONNECTION }}
