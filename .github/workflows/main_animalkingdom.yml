@@ -36,6 +36,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
         working-directory: AnimalKingdom.API
+        
+      - name: Install EF Core tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Update Database
+        run: dotnet ef database update --project AnimalKingdom.API/AnimalKingdom.API.csproj
+        env:
+          PATH: ${{ env.PATH }}:/home/runner/.dotnet/tools
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
