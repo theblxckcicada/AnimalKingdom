@@ -15,5 +15,6 @@ public partial class AddAnimalPage : ContentPage
     {
         base.OnAppearing();
         await viewModel.CheckAccountStatusAsync();
+ 
     }
 }

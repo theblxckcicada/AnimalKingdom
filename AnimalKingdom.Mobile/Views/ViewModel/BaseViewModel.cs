@@ -1,6 +1,6 @@
 using AnimalKingdom.Mobile.MSALClient;
+using AnimalKingdom.Mobile.Services;
 using AnimalKingdom.Mobile.Views.Pages;
-using AnimalKingdom.Mobile.Views.ViewModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Identity.Client;
@@ -11,7 +11,6 @@ public partial class BaseViewModel : ObservableObject
 {
     [ObservableProperty]
     private bool isBusy;
-
 
     public bool IsNotBusy => !IsBusy;
     [ObservableProperty]
@@ -28,6 +27,9 @@ public partial class BaseViewModel : ObservableObject
 
     [ObservableProperty]
     private bool loggedIn;
+
+    [ObservableProperty]
+    private string accessToken;
 
     public bool NotLoggedIn => !LoggedIn;
 
@@ -56,6 +58,15 @@ public partial class BaseViewModel : ObservableObject
         {
             Account = cachedUserAccount;
         }
+    }
+
+    public async Task AquireAccessTokenAsync(AnimalService animalService)
+    {
+        _ = await PublicClientSingleton.Instance.AcquireTokenSilentAsync();
+
+        // update access token 
+        AccessToken = PublicClientSingleton.Instance.MSALClientHelper.AuthResult.AccessToken;
+        animalService.SetAccessToken(AccessToken);
     }
 
     public void GetRandomImage()

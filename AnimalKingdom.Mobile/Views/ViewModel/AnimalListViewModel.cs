@@ -3,8 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using AnimalKingdom.Mobile.Views.Pages;
 using System.Collections.ObjectModel;
 using AnimalKingdom.Shared.Models;
-using AnimalKingdom.Mobile.Repository;
-using System.Threading.Tasks;
+using AnimalKingdom.Mobile.Services;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;
 
@@ -15,12 +14,11 @@ public partial class AnimalListViewModel : BaseViewModel
     private ObservableCollection<Animal> animalCollection = [];
 
 
-    private AnimalRepository animalRepository;
-    public AnimalListViewModel(AnimalRepository animalRepository)
+    private readonly AnimalService animalService;
+    public AnimalListViewModel(AnimalService animalService)
     {
-        this.animalRepository = animalRepository;
-        animalRepository.AnimalsUpdated += OnAnimalsUpdated;
-
+        this.animalService = animalService;
+        animalService.AnimalsUpdated += OnAnimalsUpdated;
         _ = LoadAnimals();
     }
 
@@ -31,8 +29,8 @@ public partial class AnimalListViewModel : BaseViewModel
         {
 
             var animals = string.IsNullOrEmpty(searchText)
-                ? await animalRepository.GetAnimals()
-                : await animalRepository.Search(searchText);
+                ? await animalService.GetAnimals()
+                : await animalService.Search(searchText);
 
             AnimalCollection = new ObservableCollection<Animal>(animals);
         });
@@ -66,6 +64,7 @@ public partial class AnimalListViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteAnimalAsync(Animal animal)
     {
+        await AquireAccessTokenAsync(animalService);
         await RunBusyAsync(async () =>
         {
             if (animal is not null)
@@ -73,7 +72,7 @@ public partial class AnimalListViewModel : BaseViewModel
                 bool confirm = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {animal.Name}?", "Yes", "No");
                 if (confirm)
                 {
-                    await animalRepository.DeleteAnimal(animal.Id);
+                    await animalService.DeleteAnimal(animal.Id);
                 }
             }
         });

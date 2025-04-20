@@ -8,10 +8,13 @@ using AnimalKingdom.API.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+
 [ApiController]
 [Route("api/[controller]")]
 public class AnimalController(IMediator mediator) : EntityControllerBase<Animal, Guid>(mediator)
 {
+
+
     [HttpGet]
     public override async Task<IActionResult> Get(CancellationToken cancellationToken)
     {

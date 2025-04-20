@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using AnimalKingdom.Mobile.Views.ViewModel;
-using AnimalKingdom.Mobile.Repository;
 using AnimalKingdom.Mobile.Views.Controls;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using AnimalKingdom.Mobile.Services;
 
 namespace AnimalKingdom.Mobile;
 
@@ -11,9 +13,22 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>().UseMauiCommunityToolkit()
-			
+
+        var assembly = Assembly.GetExecutingAssembly();
+        // Load appsettings.json
+        string configFileName = "appsettings.development.json";
+        string embeddedConfigfilename = $"{Assembly.GetCallingAssembly().GetName().Name}.{configFileName}";
+        using var stream = assembly.GetManifestResourceStream(embeddedConfigfilename);
+
+        var config = new ConfigurationBuilder()
+            .AddJsonStream(stream)
+            .Build();
+        builder.Configuration.AddConfiguration(config);
+
+
+        // load app settings configuration 
+        builder
+            .UseMauiApp<App>().UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -25,9 +40,11 @@ public static class MauiProgram
 				fonts.AddFont("Free-Solid-900.otf", "FreeSolid");
 			});
 
+
+
 		// Add Dependency injection 
         builder.Services.AddSingleton(FilePicker.Default);
-		builder.Services.AddSingleton<AnimalRepository>();
+		builder.Services.AddSingleton<AnimalService>();
 		builder.Services.AddSingleton<HttpClient>();
 
 		// Add View Models

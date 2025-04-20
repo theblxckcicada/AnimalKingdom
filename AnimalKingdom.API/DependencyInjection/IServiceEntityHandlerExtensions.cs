@@ -1,11 +1,10 @@
 ﻿using AnimalKingdom.API.Handlers;
 using AnimalKingdom.API.Models;
-// using AnimalKingdom.Shared.Models;
 using MediatR;
 
 namespace AnimalKingdom.API.DependencyInjection;
 
-internal static class IServiceCollectionExtensions
+internal static class IServiceEntityHandlerExtensions
 {
     public static IServiceCollection AddEntityHandlers(
         this IServiceCollection services,
@@ -66,61 +65,61 @@ internal static class IServiceCollectionExtensions
         public Type BuildServiceType(Type modelType, Type keyType)
         {
             // Use the model type as the response type if not provided
-            if (this.responseType == null)
+            if (responseType == null)
             {
                 return GenericHandlerType.MakeGenericType(
-                    this.requestType.MakeGenericType(modelType, keyType),
+                    requestType.MakeGenericType(modelType, keyType),
                     modelType
                 );
             }
 
-            if (!this.responseType.IsGenericTypeDefinition)
+            if (!responseType.IsGenericTypeDefinition)
             {
                 // Use the actual response type if it is not a generic type definition
                 return GenericHandlerType.MakeGenericType(
-                    this.requestType.MakeGenericType(modelType, keyType),
-                    this.responseType
+                    requestType.MakeGenericType(modelType, keyType),
+                    responseType
                 );
             }
 
             // Otherwise assume a single generic argument
             return GenericHandlerType.MakeGenericType(
-                this.requestType.MakeGenericType(modelType, keyType),
-                this.responseType.MakeGenericType(modelType)
+                requestType.MakeGenericType(modelType, keyType),
+                responseType.MakeGenericType(modelType)
             );
         }
 
         public Type BuildImplementationType(Type modelType, Type keyType)
         {
-            return this.handlerType.MakeGenericType(modelType, keyType);
+            return handlerType.MakeGenericType(modelType, keyType);
         }
     }
 
     private static readonly EntityHandlerDefinition[] EntityHandlerDefinitions =
         new EntityHandlerDefinition[]
         {
-            new EntityHandlerDefinition(
+            new(
                 typeof(AddEntityHandler<,>),
                 typeof(AddEntityRequest<,>),
                 typeof(CommandResponse<>)
             ),
-            new EntityHandlerDefinition(
+            new(
                 typeof(GetEntitiesHandler<,>),
                 typeof(GetEntitiesRequest<,>),
                 typeof(IList<>)
             ),
-            new EntityHandlerDefinition(typeof(GetEntityHandler<,>), typeof(GetEntityRequest<,>)),
-            new EntityHandlerDefinition(
+            new(typeof(GetEntityHandler<,>), typeof(GetEntityRequest<,>)),
+            new(
                 typeof(QueryEntitiesHandler<,>),
                 typeof(QueryEntitiesRequest<,>),
                 typeof(QueryEntitiesResponse<>)
             ),
-            new EntityHandlerDefinition(
+            new(
                 typeof(RemoveEntityHandler<,>),
                 typeof(RemoveEntityRequest<,>),
                 typeof(CommandResponse<>)
             ),
-            new EntityHandlerDefinition(
+            new(
                 typeof(UpdateEntityHandler<,>),
                 typeof(UpdateEntityRequest<,>),
                 typeof(CommandResponse<>)

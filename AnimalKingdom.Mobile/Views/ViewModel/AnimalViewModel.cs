@@ -2,7 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using AnimalKingdom.Shared.Models;
 using AnimalKingdom.Mobile.Views.Pages;
-using AnimalKingdom.Mobile.Repository;
+using AnimalKingdom.Mobile.Services;
 
 namespace AnimalKingdom.Mobile.Views.ViewModel;
 
@@ -30,14 +30,13 @@ public partial class AnimalViewModel : BaseViewModel
     [ObservableProperty]
     private List<AnimalCategory> categoryList;
 
-    AnimalRepository animalRepository;
+    readonly AnimalService animalService;
 
-    public AnimalViewModel(AnimalRepository animalRepository)
+    public AnimalViewModel(AnimalService animalService)
     {
         // Set category list regardless of animal loading
         categoryList = [.. Enum.GetValues<AnimalCategory>()];
-        this.animalRepository = animalRepository;
-  
+        this.animalService = animalService;
 
     }
 
@@ -69,7 +68,7 @@ public partial class AnimalViewModel : BaseViewModel
                 }
                 else
                 {
-                    animal = await animalRepository.GetAnimal(guid);
+                    animal = await animalService.GetAnimal(guid);
                 }
             }
 
@@ -108,7 +107,7 @@ public partial class AnimalViewModel : BaseViewModel
 
             using var stream = await result.OpenReadAsync();
             // set the image to the field
-            Image = await BaseViewModel.ConvertImageToBase64String(stream);
+            Image = await ConvertImageToBase64String(stream);
 
         }
     }
@@ -117,6 +116,7 @@ public partial class AnimalViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveAnimalToListAsync()
     {
+        await AquireAccessTokenAsync(animalService);
         await RunBusyAsync(async () =>
         {
             if (Animal is not null)
@@ -125,9 +125,9 @@ public partial class AnimalViewModel : BaseViewModel
                 Animal.Name = Name;
                 Animal.Description = Description;
                 Animal.Category = Category;
-                Animal.Image = Image ?? await BaseViewModel.ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
+                Animal.Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg"));
 
-                await animalRepository.UpdateAnimal(Animal);
+                await animalService.UpdateAnimal(Animal);
             }
             else
             {
@@ -136,12 +136,12 @@ public partial class AnimalViewModel : BaseViewModel
                 {
                     Id = Guid.NewGuid(),
                     Name = Name,
-                    Image = Image ?? await BaseViewModel.ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg")),
+                    Image = Image ?? await ConvertImageToBase64String(await FileSystem.OpenAppPackageFileAsync("default_animal.jpg")),
                     Description = Description,
                     Category = Category,
                 };
 
-                await animalRepository.AddAnimal(newAnimal);
+                await animalService.AddAnimal(newAnimal);
             }
 
             // Navigate back to the list page

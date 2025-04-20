@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AnimalKingdom.Mobile.MSALClient
+﻿namespace AnimalKingdom.Mobile.MSALClient
 {
     public class DownstreamApiHelper
     {
@@ -19,9 +13,9 @@ namespace AnimalKingdom.Mobile.MSALClient
                 throw new ArgumentNullException(nameof(msalClientHelper));
             }
 
-            this.DownstreamApiConfig = downstreamApiConfig;
-            this.MSALClient = msalClientHelper;
-            this.DownstreamApiScopes = this.DownstreamApiConfig.ScopesArray;
+            DownstreamApiConfig = downstreamApiConfig;
+            MSALClient = msalClientHelper;
+            DownstreamApiScopes = DownstreamApiConfig.ScopesArray;
         }
     }
 }
