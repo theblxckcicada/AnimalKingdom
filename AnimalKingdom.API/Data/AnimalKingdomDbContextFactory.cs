@@ -7,18 +7,23 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
 {
     public AnimalKingdomDbContext CreateDbContext(string[] args)
     {
-        // Get Default SQL Server  configuration
-        var config  = new ConfigurationBuilder()
+        // Build config from appsettings.json + environment variables
+        var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddEnvironmentVariables()
             .Build();
 
-        var DefaultConnectionString = config.GetConnectionString("AnimalKingdom");
-        // var DefaultConnectionString =
-        //     "Server=localhost;Database=master;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true;";
+        // Prefer environment variable if it exists
+        var connectionString =
+            Environment.GetEnvironmentVariable("CONNECTION_STRING")
+            ?? config.GetConnectionString("AnimalKingdom");
+
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException("Connection string not found.");
 
         var optionsBuilder = new DbContextOptionsBuilder<AnimalKingdomDbContext>();
-        optionsBuilder.UseSqlServer(DefaultConnectionString);
+        optionsBuilder.UseSqlServer(connectionString);
 
         return new AnimalKingdomDbContext(optionsBuilder.Options);
     }
