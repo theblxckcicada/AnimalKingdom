@@ -40,10 +40,12 @@ jobs:
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef
 
-      - name: Update Database
-        run: dotnet ef database update --project AnimalKingdom.API/AnimalKingdom.API.csproj
+      - name: Run EF Core Migrations
+        run: dotnet ef database update --project AnimalKingdom.API --startup-project AnimalKingdom.API
         env:
-          CONNECTION_STRING: ${{ secrets.PROD_CONNECTION_STRING }}
+          ASPNETCORE_ENVIRONMENT: Production
+          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
+
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
