@@ -10,7 +10,7 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
         // Get Default SQL Server  configuration
         var config  = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.Development.json", optional: false)
+            .AddJsonFile("appsettings.json", optional: false)
             .Build();
 
         var DefaultConnectionString = config.GetConnectionString("AnimalKingdom");
