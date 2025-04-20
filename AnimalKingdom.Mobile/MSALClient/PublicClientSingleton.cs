@@ -50,7 +50,9 @@ namespace AnimalKingdom.Mobile.MSALClient
             // Load config
             var assembly = Assembly.GetExecutingAssembly();
 
-            string embeddedConfigfilename = $"{Assembly.GetCallingAssembly().GetName().Name}.appsettings.json";
+            //TODO: update the config file to use appsettings.json when going into prod 
+            string configFileName = "appsettings.development.json";
+            string embeddedConfigfilename = $"{Assembly.GetCallingAssembly().GetName().Name}.{configFileName}";
             using var stream = assembly.GetManifestResourceStream(embeddedConfigfilename);
             AppConfiguration = new ConfigurationBuilder()
                 .AddJsonStream(stream)

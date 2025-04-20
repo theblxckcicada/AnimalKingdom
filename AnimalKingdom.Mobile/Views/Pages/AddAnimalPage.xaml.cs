@@ -10,7 +10,6 @@ public partial class AddAnimalPage : ContentPage
         InitializeComponent();
         viewModel = _viewModel;
         BindingContext = _viewModel;
-        _ = _viewModel.CheckAccountStatusAsync();
     }
     protected async override void OnAppearing()
     {

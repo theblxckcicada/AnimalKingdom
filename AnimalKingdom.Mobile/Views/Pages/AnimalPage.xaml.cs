@@ -11,7 +11,6 @@ public partial class AnimalItemPage : ContentPage
      
         viewModel = _viewModel;
         BindingContext = _viewModel;
-        _ = viewModel.CheckAccountStatusAsync();
     }
     protected async override void OnAppearing()
     {
