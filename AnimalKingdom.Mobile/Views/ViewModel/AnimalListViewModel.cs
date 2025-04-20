@@ -29,7 +29,7 @@ public partial class AnimalListViewModel : BaseViewModel
     {
         return RunBusyAsync(async () =>
         {
-         
+
             var animals = string.IsNullOrEmpty(searchText)
                 ? await animalRepository.GetAnimals()
                 : await animalRepository.Search(searchText);
@@ -47,14 +47,11 @@ public partial class AnimalListViewModel : BaseViewModel
     [RelayCommand]
     private async Task AnimalSelectionChangedAsync(Animal animal)
     {
-        await RunBusyAsync(async () =>
+        if (animal is not null)
         {
-            if (animal is not null)
-            {
-                await Shell.Current.GoToAsync($"{nameof(AnimalItemPage)}?Id={animal.Id}");
+            await Shell.Current.GoToAsync($"{nameof(AnimalItemPage)}?Id={animal.Id}");
+        }
 
-            }
-        });
 
     }
 
@@ -69,8 +66,9 @@ public partial class AnimalListViewModel : BaseViewModel
     [RelayCommand]
     private async Task DeleteAnimalAsync(Animal animal)
     {
-        await RunBusyAsync(async () => {
-            if(animal is not null)
+        await RunBusyAsync(async () =>
+        {
+            if (animal is not null)
             {
                 bool confirm = await Shell.Current.DisplayAlert("Delete", $"Are you sure you want to delete {animal.Name}?", "Yes", "No");
                 if (confirm)
