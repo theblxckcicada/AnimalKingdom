@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using AnimalKingdom.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
 using System.Reflection;
@@ -58,11 +59,11 @@ namespace AnimalKingdom.Mobile.MSALClient
                 .AddJsonStream(stream)
                 .Build();
 
-            AzureADB2CConfig azureADConfig = AppConfiguration.GetSection("AzureAdB2C").Get<AzureADB2CConfig>();
-            this.MSALClientHelper = new MSALClientHelper(azureADConfig);
+            AzureADB2CConfig azureADConfig = AppConfiguration.GetSection(nameof(AzureAdB2C)).Get<AzureADB2CConfig>();
+            MSALClientHelper = new MSALClientHelper(azureADConfig);
 
-            DownStreamApiConfig downStreamApiConfig = AppConfiguration.GetSection("DownstreamApi").Get<DownStreamApiConfig>();
-            this.DownstreamApiHelper = new DownstreamApiHelper(downStreamApiConfig, this.MSALClientHelper);
+            DownStreamApiConfig downStreamApiConfig = AppConfiguration.GetSection(nameof(DownstreamApi)).Get<DownStreamApiConfig>();
+            DownstreamApiHelper = new DownstreamApiHelper(downStreamApiConfig, MSALClientHelper);
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace AnimalKingdom.Mobile.MSALClient
         public async Task<string> AcquireTokenSilentAsync()
         {
             // Get accounts by policy
-            return await this.AcquireTokenSilentAsync(this.GetScopes()).ConfigureAwait(false);
+            return await AcquireTokenSilentAsync(GetScopes()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace AnimalKingdom.Mobile.MSALClient
         /// <returns>An access token</returns>
         public async Task<string> AcquireTokenSilentAsync(string[] scopes)
         {
-            return await this.MSALClientHelper.SignInUserAndAcquireAccessToken(scopes).ConfigureAwait(false);
+            return await MSALClientHelper.SignInUserAndAcquireAccessToken(scopes).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,8 +93,8 @@ namespace AnimalKingdom.Mobile.MSALClient
         /// <returns></returns>
         internal async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes)
         {
-            this.MSALClientHelper.UseEmbedded = this.UseEmbedded;
-            return await this.MSALClientHelper.SignInUserInteractivelyAsync(scopes).ConfigureAwait(false);
+            MSALClientHelper.UseEmbedded = UseEmbedded;
+            return await MSALClientHelper.SignInUserInteractivelyAsync(scopes).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace AnimalKingdom.Mobile.MSALClient
         /// <returns></returns>
         internal async Task SignOutAsync()
         {
-            await this.MSALClientHelper.SignOutUserAsync().ConfigureAwait(false);
+            await MSALClientHelper.SignOutUserAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace AnimalKingdom.Mobile.MSALClient
         /// <returns>An array of all scopes</returns>
         internal string[] GetScopes()
         {
-            return this.DownstreamApiHelper.DownstreamApiConfig.ScopesArray;
+            return DownstreamApiHelper.DownstreamApiConfig.ScopesArray;
         }
     }
 }

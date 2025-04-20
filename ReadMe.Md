@@ -1,9 +1,5 @@
 ﻿# 🐾 Animal Kingdom – Dev Notes
 
-This is a personal repo for the **Animal Kingdom** project. It's public for visibility, but not intended for others to deploy or contribute. This README is just to remind myself how it's structured and a few key notes about setup/configs.
-
----
-
 ## 📁 Project Structure
 
 - **AnimalKingdom.API**  
