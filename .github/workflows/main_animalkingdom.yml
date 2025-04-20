@@ -7,16 +7,16 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'AnimalKingdom.API/**'
-      - 'AnimalKingdom.Shared/**'
+ #   paths:
+  #    - 'AnimalKingdom.API/**'
+   #   - 'AnimalKingdom.Shared/**'
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-    paths:
-      - 'AnimalKingdom.API/**'
-      - 'AnimalKingdom.Shared/**'
+ #   paths:
+  #    - 'AnimalKingdom.API/**'
+   #   - 'AnimalKingdom.Shared/**'
   workflow_dispatch:
 
 jobs:
