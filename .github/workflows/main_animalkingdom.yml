@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and Deploy Animal Kingdom API 
+name: Build and Deploy Animal Kingdom API
 
 on:
   push:
@@ -36,12 +36,14 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
         working-directory: AnimalKingdom.API
-        
+
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef
 
       - name: Update Database
         run: dotnet ef database update --project AnimalKingdom.API/AnimalKingdom.API.csproj
+        env:
+          CONNECTION_STRING: ${{ secrets.PROD_CONNECTION_STRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
@@ -68,7 +70,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -83,4 +85,3 @@ jobs:
           app-name: 'animalkingdom'
           slot-name: 'Production'
           package: .
-          
