@@ -11,7 +11,7 @@ public record AddEntityRequest<TModel, TKey> : IRequest<CommandResponse<TModel>>
     where TModel : class, IEntityBase<TKey>
 {
     public TModel Entity { get; init; } = default!;
-    public List<TModel> Entities { get; init; } = default!;
+    public List<TModel> Entities { get; init; } = [];
 }
 
 public class AddEntityHandler<TModel, TKey>(

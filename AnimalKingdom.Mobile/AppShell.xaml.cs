@@ -1,6 +1,5 @@
 ﻿
 using AnimalKingdom.Mobile.Views.Pages;
-using AnimalKingdom.Mobile.Views.ViewModel;
 
 namespace AnimalKingdom.Mobile;
 

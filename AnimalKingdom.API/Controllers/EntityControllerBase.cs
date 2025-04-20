@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AnimalKingdom.API.Controllers;
 
-//[Authorize]
+[Authorize]
 public abstract class EntityControllerBase<TModel, TKey>(IMediator mediator) : ControllerBase
     where TModel : class, IEntityBase<TKey>
 {
@@ -88,6 +88,7 @@ public abstract class EntityControllerBase<TModel, TKey>(IMediator mediator) : C
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public virtual async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var entities = await mediator.Send(
@@ -98,6 +99,7 @@ public abstract class EntityControllerBase<TModel, TKey>(IMediator mediator) : C
     }
 
     [HttpGet("{id}")]
+    [AllowAnonymous]
     public virtual async Task<IActionResult> Get(TKey id, CancellationToken cancellationToken)
     {
         var entity = await mediator.Send(
@@ -157,6 +159,7 @@ public abstract class EntityControllerBase<TModel, TKey>(IMediator mediator) : C
     }
 
     [HttpPost("query")]
+    [AllowAnonymous]
     public virtual async Task<IActionResult> Query(
         [FromBody] EntityQuery query,
         CancellationToken cancellationToken

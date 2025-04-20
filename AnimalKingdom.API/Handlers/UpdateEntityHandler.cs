@@ -12,7 +12,7 @@ public record UpdateEntityRequest<TModel, TKey> : IRequest<CommandResponse<TMode
 {
     public TKey Id { get; init; } = default!;
     public TModel Entity { get; init; } = default!;
-    public List<TModel> Entities { get; init; } = default!;
+    public List<TModel> Entities { get; init; } = [];
 }
 
 public class UpdateEntityHandler<TModel, TKey>(

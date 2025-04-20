@@ -15,25 +15,25 @@ public class AnimalKingdomDbContext(DbContextOptions<AnimalKingdomDbContext> opt
     public T AddOne<T>(T entity)
         where T : class, IEntityBase
     {
-        return this.Set<T>().Add(entity).Entity;
+        return Set<T>().Add(entity).Entity;
     }
 
     public IQueryable<T> Query<T>()
         where T : class, IEntityBase
     {
-        return this.Set<T>();
+        return Set<T>();
     }
 
     public T RemoveOne<T>(T entity)
         where T : class, IEntityBase
     {
-        return this.Set<T>().Remove(entity).Entity;
+        return Set<T>().Remove(entity).Entity;
     }
 
     public T UpdateOne<T>(T entity)
         where T : class, IEntityBase
     {
-        return this.Set<T>().Update(entity).Entity;
+        return Set<T>().Update(entity).Entity;
     }
 
     public List<T> AddMany<T>(List<T> entities)

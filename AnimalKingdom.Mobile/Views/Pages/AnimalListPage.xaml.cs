@@ -1,5 +1,4 @@
 using AnimalKingdom.Mobile.Views.ViewModel;
-using Microsoft.Maui.Controls;
 
 namespace AnimalKingdom.Mobile.Views.Pages;
 
@@ -66,7 +65,7 @@ public partial class AnimalListPage : ContentPage
             if (viewModel?.AnimalSearchTextChangedCommand?.CanExecute(e.NewTextValue) == true)
             {
                 viewModel.AnimalSearchTextChangedCommand.Execute(e.NewTextValue);
-                this.searchText = e.NewTextValue;
+                searchText = e.NewTextValue;
             }
         }
         catch (TaskCanceledException)

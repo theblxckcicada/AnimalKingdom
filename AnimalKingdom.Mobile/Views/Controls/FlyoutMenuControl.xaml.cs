@@ -1,5 +1,3 @@
-using AnimalKingdom.Mobile.Views.ViewModel;
-
 namespace AnimalKingdom.Mobile.Views.Controls;
 
 public partial class FlyoutMenuControl : ContentView
