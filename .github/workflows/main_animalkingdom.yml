@@ -40,27 +40,13 @@ jobs:
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef
 
-      - name: Check if Connection String is available
-        run: |
-          if [ -z "$ConnectionStrings__AnimalKingdom" ]; then
-            echo "❌ Connection string is missing"
-            exit 1
-          else
-            echo "✅ Connection string is set, length: ${#ConnectionStrings__AnimalKingdom}"
-            echo "Prefix (safe to show): ${ConnectionStrings__AnimalKingdom:0:10}********"
-          fi
+      - name: Apply EF Core Migrations
         shell: bash
         env:
-          ConnectionStrings__AnimalKingdom: ${{ secrets.OVAWATCH_DB_CONNECTION }}
-
-
-      - name: Apply EF Core Migrations (direct connection string)
-        shell: bash
-        run: >
-            dotnet ef database update
-            --project AnimalKingdom.API
-            --startup-project AnimalKingdom.API
-            --connection "${{ secrets.OVAWATCH_DB_CONNECTION }}"
+            CONNECTION_STRING: ${{ secrets.OVAWATCH_DB_CONNECTION }}
+        run: |
+            echo "Running EF migration with explicit CONNECTION_STRING..."
+            dotnet ef database update --project AnimalKingdom.API --startup-project AnimalKingdom.API
 
 
       - name: dotnet publish
