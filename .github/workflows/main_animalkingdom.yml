@@ -53,13 +53,12 @@ jobs:
         env:
           ConnectionStrings__AnimalKingdom: ${{ secrets.OVAWATCH_DB_CONNECTION }}
 
-
-      - name: Run EF Core Migrations
-        run: dotnet ef database update
-        working-directory: AnimalKingdom.API  # Ensure correct directory for appsettings
-        env:
-          ASPNETCORE_ENVIRONMENT: Production  # Optional: Explicitly set environment
-          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
+      - name: Apply EF Core Migrations
+        run: |
+            ConnectionStrings__AnimalKingdom="${{ secrets.OVAWATCH_DB_CONNECTION }}" \
+            ASPNETCORE_ENVIRONMENT="Production" \
+            dotnet ef database update
+        working-directory: AnimalKingdom.API
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
