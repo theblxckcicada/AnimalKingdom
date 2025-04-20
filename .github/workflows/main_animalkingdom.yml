@@ -51,7 +51,7 @@ jobs:
           fi
         shell: bash
         env:
-          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
+          ConnectionStrings__AnimalKingdom: ${{ secrets.OVAWATCH_DB_CONNECTION }}
 
 
       - name: Run EF Core Migrations
