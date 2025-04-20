@@ -42,10 +42,10 @@ jobs:
 
       - name: Run EF Core Migrations
         run: dotnet ef database update --project AnimalKingdom.API --startup-project AnimalKingdom.API
+        working-directory: AnimalKingdom.API  # Ensure correct directory for appsettings
         env:
-          ASPNETCORE_ENVIRONMENT: Production
-          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
-
+          ConnectionStrings__AnimalKingdom: ${{ secrets.PRODUCTION_DB_CONNECTION }}
+          ASPNETCORE_ENVIRONMENT: Production  # Optional: Explicitly set environment
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
