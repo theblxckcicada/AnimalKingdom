@@ -40,10 +40,19 @@ jobs:
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef
 
-      - name: Debug connection string presence
-        run: echo "Connection String Length: ${#ConnectionStrings__AnimalKingdom}"
+      - name: Check if Connection String is available
+        run: |
+          if [ -z "$ConnectionStrings__AnimalKingdom" ]; then
+            echo "❌ Connection string is missing"
+            exit 1
+          else
+            echo "✅ Connection string is set, length: ${#ConnectionStrings__AnimalKingdom}"
+            echo "Prefix (safe to show): ${ConnectionStrings__AnimalKingdom:0:10}********"
+          fi
+        shell: bash
         env:
           ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
+
 
       - name: Run EF Core Migrations
         run: dotnet ef database update
