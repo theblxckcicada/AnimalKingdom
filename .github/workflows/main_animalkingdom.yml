@@ -40,12 +40,17 @@ jobs:
       - name: Install EF Core tools
         run: dotnet tool install --global dotnet-ef
 
+      - name: Debug connection string presence
+        run: echo "Connection String Length: ${#ConnectionStrings__AnimalKingdom}"
+        env:
+          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
+
       - name: Run EF Core Migrations
-        run: dotnet ef database update 
+        run: dotnet ef database update
         working-directory: AnimalKingdom.API  # Ensure correct directory for appsettings
         env:
-          ConnectionStrings__AnimalKingdom: ${{ secrets.PRODUCTION_DB_CONNECTION }}
           ASPNETCORE_ENVIRONMENT: Production  # Optional: Explicitly set environment
+          ConnectionStrings__AnimalKingdom: ${{ secrets.PROD_CONNECTION_STRING }}
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"

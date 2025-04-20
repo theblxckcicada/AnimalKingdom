@@ -7,14 +7,14 @@ public class AnimalKingdomDbContextFactory : IDesignTimeDbContextFactory<AnimalK
 {
     public AnimalKingdomDbContext CreateDbContext(string[] args)
     {
-        // Determine if we're in development
-        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+        var environment =
+            Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
 
         var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: true) // base config
-            .AddJsonFile($"appsettings.{env}.json", optional: true) // environment-specific (e.g. appsettings.Development.json)
-            .AddEnvironmentVariables() // this will map ConnectionStrings__AnimalKingdom, etc.
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile($"appsettings.{environment}.json", optional: true)
+            .AddEnvironmentVariables()
             .Build();
 
         var connectionString = config.GetConnectionString("AnimalKingdom");
